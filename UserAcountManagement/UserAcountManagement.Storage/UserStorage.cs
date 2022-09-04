@@ -1,17 +1,48 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using UserAcountManagement.Storage.Entities;
 
 namespace UserAcountManagement.Storage;
 
 public class UserStorage : IUserStorage
 {
-    public Task<string> LogIn(string email, string password)
+    IDbContextFactory<BankDBContext> _dbContextFactory;
+    public UserStorage(IDbContextFactory<BankDBContext> dbContextFactory)
     {
-        throw new NotImplementedException();
+        _dbContextFactory = dbContextFactory;
     }
 
-    public Task<string> Register(User user)
+    public async Task<Customer> LogIn(string email, string password)
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password)){
+            throw new ArgumentNullException();
+        }
+        var dbContext = _dbContextFactory.CreateDbContext();
+        return await dbContext.Customers.FirstOrDefaultAsync(customer => customer.Email.Equals(email) && customer.Password.Equals(password));
+    }
+
+    public async Task<Customer> Register(Customer customer)
+    {
+        if (customer == null)
+            throw new ArgumentNullException();
+        var dbContext = _dbContextFactory.CreateDbContext();
+        dbContext.Customers.Add(customer);
+        await dbContext.SaveChangesAsync();
+        return customer;
+    }
+    public async Task DeleteCustomer(Customer customer)
+    {
+        if (customer == null)
+            throw new ArgumentNullException(nameof(customer));
+        var dbContext = _dbContextFactory.CreateDbContext();
+        dbContext.Customers.Remove(customer);
+        await dbContext.SaveChangesAsync();
+    }
+    public async Task<string> ValidateUniqueEmail(string email)
+    {
+        if (string.IsNullOrEmpty(email))
+            throw new ArgumentNullException(nameof(email));
+        var dbContext = _dbContextFactory.CreateDbContext();
+        return (await dbContext.Customers.FirstOrDefaultAsync(customer => customer.Email.Equals(email)))?.Email;
     }
 }
