@@ -1,5 +1,4 @@
-﻿
-namespace UserAcountManagement.Service;
+﻿namespace UserAcountManagement.Service;
 
 public static class Extensions
 {

@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DTO
+
+namespace DTO;
+
+public class LogInDTO
 {
-    public class LogInDTO
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-        [Required]
-        public string CustomerPassword { get; set; }
-    }
+    [Required]
+    [EmailAddress]
+    public string Email { get; set; }
+    [Required]
+    public string CustomerPassword { get; set; }
 }

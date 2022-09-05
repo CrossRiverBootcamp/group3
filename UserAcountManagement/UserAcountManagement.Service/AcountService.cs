@@ -1,5 +1,4 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using DTO;
 using UserAcountManagement.Storage;
 using UserAcountManagement.Storage.Entities;
@@ -23,11 +22,13 @@ public class AcountService : IAcountService
             Acount acount = await _AcountStorage.GetAcountInfo(newAcountInfo.AcountId);
             if (acount != null)
                 return acount;
-            return null;
+            throw new Exception("Acount does not exist");
+            
+
         }
         catch(Exception ex)
         {
-            throw new Exception("404");
+            throw ex;
 
         }
     }

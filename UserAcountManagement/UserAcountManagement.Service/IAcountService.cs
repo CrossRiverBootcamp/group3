@@ -1,5 +1,4 @@
-﻿
-using DTO;
+﻿using DTO;
 using UserAcountManagement.Storage.Entities;
 
 namespace UserAcountManagement.Service;
