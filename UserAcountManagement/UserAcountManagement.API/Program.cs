@@ -14,6 +14,12 @@ Log.Logger = new LoggerConfiguration().
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAcountService,AcountService>();
+builder.Services.AddScoped<IAcountStorage, AcountStorage>();
+builder.Services.AddScoped<IUserStorage, UserStorage>();
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddDbContextFactory<BankDBContext>(opt => opt.UseSqlServer("adf"));
+//UserAcountManagement.Service.Extensions.AddBLDependencies(builder.Services);
 builder.Services.AddScoped<IAcountService, AcountService>();
 builder.Services.AddBLDependencies(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();

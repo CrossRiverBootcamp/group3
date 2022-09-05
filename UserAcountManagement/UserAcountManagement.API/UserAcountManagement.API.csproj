@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DTO\DTO.csproj" />
     <ProjectReference Include="..\UserAcountManagement.Service\UserAcountManagement.Service.csproj" />
-    <ProjectReference Include="..\UserAcountManagement.Storage\UserAcountManagement.Storage.csproj" />
   </ItemGroup>
 
 </Project>
