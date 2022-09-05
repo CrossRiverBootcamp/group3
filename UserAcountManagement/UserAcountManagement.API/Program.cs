@@ -12,6 +12,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAcountService,AcountService>();
 builder.Services.AddScoped<IAcountStorage, AcountStorage>();
 builder.Services.AddScoped<IUserStorage, UserStorage>();
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddDbContextFactory<BankDBContext>(opt => opt.UseSqlServer("adf"));
 //UserAcountManagement.Service.Extensions.AddBLDependencies(builder.Services);
 builder.Services.AddEndpointsApiExplorer();
