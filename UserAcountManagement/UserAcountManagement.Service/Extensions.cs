@@ -14,8 +14,6 @@ public static class Extensions
         services.AddScoped<IAcountStorage, AcountStorage>();
         IServiceCollection serviceCollection = services.AddDbContextFactory<BankDBContext>(opt => opt.UseSqlServer(
           configuration.GetConnectionString("BankDB")));
-
-
-        return services;
+          return services;
     }
 }
