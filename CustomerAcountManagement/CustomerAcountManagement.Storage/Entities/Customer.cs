@@ -1,17 +1,25 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace DTO;
+namespace CustomerAcountManagement.Storage.Entities;
 
-public class RegisterDTO
+[Index("Email", IsUnique = true)]
+
+public class Customer
 {
+    [Key]
+    public int Id { get; set; }
+    [MaxLength(30)]
     [Required]
     public string FirstName { get; set; }
+    [MaxLength(30)]
     [Required]
     public string LastName { get; set; }
     [EmailAddress]
+    [Required]
     public string Email { get; set; }
+    [MinLength(8)]
     [Required]
     public string Password { get; set; }
-
 }

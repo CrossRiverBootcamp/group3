@@ -1,9 +1,9 @@
-﻿using AutoMapper;
+using AutoMapper;
 using DTO;
-using UserAcountManagement.Storage;
-using UserAcountManagement.Storage.Entities;
+using CustomerAcountManagement.Storage;
+using CustomerAcountManagement.Storage.Entities;
 
-namespace UserAcountManagement.Service;
+namespace CustomerAcountManagement.Service;
 
 public class AcountService : IAcountService
 {

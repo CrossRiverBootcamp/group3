@@ -1,10 +1,10 @@
-﻿
+
 using DTO;
-using UserAcountManagement.Storage.Entities;
+using CustomerAcountManagement.Storage.Entities;
 
-namespace UserAcountManagement.Service;
+namespace CustomerAcountManagement.Service;
 
-public interface IUserService
+public interface ICustomerService
 {
     public Task<bool> PostCustomer(RegisterDTO registerDTO);
     public Task<int> LogIn(string email, string password);

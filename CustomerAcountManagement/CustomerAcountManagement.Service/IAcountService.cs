@@ -1,7 +1,7 @@
-﻿using DTO;
-using UserAcountManagement.Storage.Entities;
+using DTO;
+using CustomerAcountManagement.Storage.Entities;
 
-namespace UserAcountManagement.Service;
+namespace CustomerAcountManagement.Service;
 
 public interface IAcountService
 {
