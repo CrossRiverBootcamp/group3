@@ -72,7 +72,8 @@
               "browserTarget": "CustomerAcountManagementClient:build:production"
             },
             "development": {
-              "browserTarget": "CustomerAcountManagementClient:build:development"
+              "browserTarget": "CustomerAcountManagementClient:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

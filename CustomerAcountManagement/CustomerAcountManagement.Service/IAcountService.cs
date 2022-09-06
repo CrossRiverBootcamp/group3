@@ -6,5 +6,5 @@ namespace CustomerAcountManagement.Service;
 public interface IAcountService
 {
     public Task<bool> PostAcount(AcountDTO newAcount);
-    public Task<Acount> GetAcount(AcountInfoDTO newAcountInfo);
+    public Task<AcountInfoDTO> GetAcount(int acountId);
 }

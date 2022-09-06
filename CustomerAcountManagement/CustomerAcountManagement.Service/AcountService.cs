@@ -15,13 +15,13 @@ public class AcountService : IAcountService
         _mapper = mapper;
     }
 
-    public async Task<Acount> GetAcount(AcountInfoDTO newAcountInfo)
+    public async Task<AcountInfoDTO> GetAcount(int acountId)
     {
         try
         {
-            Acount acount = await _AcountStorage.GetAcountInfo(newAcountInfo.AcountId);
+            Acount acount = await _AcountStorage.GetAcountInfo(acountId);
             if (acount != null)
-                return acount;
+                return _mapper.Map<AcountInfoDTO>(acount);
             throw new Exception("Acount does not exist");
             
 

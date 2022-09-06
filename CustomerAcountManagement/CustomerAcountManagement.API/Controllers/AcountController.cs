@@ -17,12 +17,12 @@ public class AcountController : ControllerBase
     }
 
 
-    [HttpGet("AcountInfo")]
-    public async Task<ActionResult<int>> AcountInfo([FromBody] AcountInfoDTO acountInfoDTO)
+    [HttpGet("AcountInfo/ {acountId}")]
+    public async Task<ActionResult<AcountInfoDTO>> AcountInfo(int acountId)
     {
         try
         {
-            return Ok(await _AcountService.GetAcount(acountInfoDTO));
+            return Ok(await _AcountService.GetAcount(acountId));
 
         }
         catch (Exception ex)

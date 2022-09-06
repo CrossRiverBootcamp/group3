@@ -3,9 +3,16 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AcountInfoComponent } from './acount-info/acount-info.component';
+import{HttpClientModule}from '@angular/common/http';
+import { MaterialModule } from '../material/material/material.module';
+import { RouterModule, Routes } from '@angular/router';
 
+const routes: Routes = [
+  { path: "login", component: LoginComponent },
+  { path: "register", component:RegisterComponent },
+  { path: "acountInfo", component: AcountInfoComponent }
 
-
+]
 @NgModule({
   declarations: [
     LoginComponent,
@@ -13,7 +20,13 @@ import { AcountInfoComponent } from './acount-info/acount-info.component';
     AcountInfoComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    HttpClientModule,
+    MaterialModule,
+    RouterModule.forChild(routes)
+  ],
+  exports:[
+    AcountInfoComponent
   ]
 })
 export class AcountModule { }

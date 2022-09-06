@@ -3,6 +3,18 @@ using CustomerAcountManagement.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
+string AllowAll = "AllowAll";//
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(AllowAll
+                      , policy =>
+                      {
+                          policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+
+                      });
+});
 IConfigurationRoot configuration = new
             ConfigurationBuilder().AddJsonFile("appsettings.json",
             optional: false, reloadOnChange: true).Build();
@@ -33,6 +45,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseEventHandlerMiddleware();
+app.UseCors(AllowAll);
 
 app.UseHttpsRedirection();
 
