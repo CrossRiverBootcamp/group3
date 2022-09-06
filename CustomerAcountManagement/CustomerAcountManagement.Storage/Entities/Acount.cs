@@ -11,7 +11,7 @@ public class Acount
     [ForeignKey("Customer")]
     public int CustomerId { get; set; }
     public DateTime OpenDate { get; set; }
-    public double Balance { get; set; } = 1000;
+    public int Balance { get; set; } = 1000;
     public virtual Customer Customer { get; set; }
 
 }

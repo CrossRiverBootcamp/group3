@@ -16,6 +16,6 @@ public class AcountInfoDTO
     [Required]
     public int AcountId { get; set; }
     public DateTime OpenDate { get; set; }
-    public double Balance { get; set; }
+    public int Balance { get; set; }
 
 }
