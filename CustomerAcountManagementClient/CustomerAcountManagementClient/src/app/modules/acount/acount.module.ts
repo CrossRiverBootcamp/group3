@@ -6,6 +6,8 @@ import { AcountInfoComponent } from './acount-info/acount-info.component';
 import{HttpClientModule}from '@angular/common/http';
 import { MaterialModule } from '../material/material/material.module';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule  } from "@angular/forms";
+
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -18,15 +20,20 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
     AcountInfoComponent
+   
   ],
   imports: [
     CommonModule,
     HttpClientModule,
     MaterialModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports:[
     AcountInfoComponent
   ]
+  
 })
+
 export class AcountModule { }

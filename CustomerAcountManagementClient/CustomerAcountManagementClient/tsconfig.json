@@ -1,5 +1,6 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
+  
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
@@ -28,5 +29,8 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+    
+  },
+  //כאן שמתי את השורה הזאת שאני לא בטוחה מה היא עושה
+  "strictPropertyInitialization": false
 }
