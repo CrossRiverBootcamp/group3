@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { customerService } from 'src/app/services/customer.service';
 import { LoginDTO } from 'src/app/models/loginDTO.model';
-import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-login',
@@ -14,7 +12,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   hide: boolean = false;
   customer!: LoginDTO;
-  constructor(private _customerService: customerService, private router: Router) { }
+  constructor(private _customerService: customerService) { }
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       "email": new FormControl("", Validators.required),
@@ -26,15 +24,15 @@ export class LoginComponent implements OnInit {
     this.hide = !this.hide;
   }
   async logIn() {
-
-    this.customer={email:this.loginForm?.value.email,
-      password:this.loginForm?.value.password
+try{
+   this.customer = {
+      email: this.loginForm?.value.email,
+      customerPassword: this.loginForm?.value.password
     }
-    this._customerService.logIn(this.customer).subscribe(acountId => {
-
-      //this.router.navigate(['acountInfo']);
-    });;
-
-
-  }
+    this._customerService.logIn(this.customer)
+    }
+catch{
+alert("The email or password you inserted is not correct, maybe you have to sign up?")
 }
+}
+}  

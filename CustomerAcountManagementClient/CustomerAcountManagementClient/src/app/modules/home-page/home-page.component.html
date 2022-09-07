@@ -1,1 +1,5 @@
-<p>home-page works!</p>
+<button mat-button [matMenuTriggerFor]="menu">Menu</button>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="navigateToLogin()">log in</button>
+    <button mat-menu-item (click)="navigateToRegister()">register</button>
+</mat-menu>

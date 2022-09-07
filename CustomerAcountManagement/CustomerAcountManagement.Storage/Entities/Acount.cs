@@ -10,8 +10,8 @@ public class Acount
     public int Id { get; set; }
     [ForeignKey("Customer")]
     public int CustomerId { get; set; }
-    public DateTime OpenDate { get; set; }
-    public double Balance { get; set; } = 1000;
+    public DateTime OpenDate { get; set; }=DateTime.Now;
+    public int Balance { get; set; } = 1000;
     public virtual Customer Customer { get; set; }
 
 }

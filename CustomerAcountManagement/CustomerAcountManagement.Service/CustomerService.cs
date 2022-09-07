@@ -68,7 +68,7 @@ public class CustomerService : ICustomerService
 
             return true;
         }
-        catch 
+        catch
         {
             return false;
         }

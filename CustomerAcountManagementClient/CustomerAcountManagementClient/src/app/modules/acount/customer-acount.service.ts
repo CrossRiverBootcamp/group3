@@ -7,7 +7,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CustomerAcountService {
     constructor(private _http: HttpClient) { }
-    getAcountInfo(acountId: number):Observable<any> {
-       return this._http.get(`https://localhost:7251/api/Acount/AcountInfo/ ${acountId}`)
-    }
+    // baseUrl:string='https://localhost:7251/api/Acount/';
+    // getAcountInfo(/*acountId: number*/):Observable<any> {
+    //    return this._http.get(`${this.baseUrl}AcountInfo/ ${this.acountId}`)
+    // }
 }

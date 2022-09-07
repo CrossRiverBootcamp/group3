@@ -31,7 +31,9 @@ const routes: Routes = [
     ReactiveFormsModule,
   ],
   exports:[
-    AcountInfoComponent
+    AcountInfoComponent,
+    LoginComponent,
+    RegisterComponent
   ]
   
 })
