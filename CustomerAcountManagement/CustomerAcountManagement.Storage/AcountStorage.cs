@@ -40,4 +40,48 @@ public class AcountStorage : IAcountStorage
         var context = _dbContextFactory.CreateDbContext();
         return (await context.Acounts.FirstOrDefaultAsync(acount => acount.CustomerId == customerId)).Id;
     }
+    public async Task<bool> ValidateSenderBalance(int balance, int idSender)
+    {
+        if (balance == 0 || idSender == 0)
+            throw new ArgumentNullException();
+        var context = _dbContextFactory.CreateDbContext();
+        int senderBalance = (await context.Acounts.FirstOrDefaultAsync(acount => acount.CustomerId == idSender)).Balance;
+        if (senderBalance >= balance)
+        {
+            return true;
+        }
+        return false;
+
+
+    }
+    public async Task<bool> UpdateBalance(int receiverId, int senderId, int amount)
+    {
+        if (receiverId == 0 || senderId == 0 || amount == 0)
+            throw new ArgumentNullException();
+        var context = _dbContextFactory.CreateDbContext();
+        try
+        {
+            Acount senderAcount = await context.Acounts.FirstOrDefaultAsync(acount => acount.Id == senderId);
+            senderAcount.Balance -= amount;
+            Acount receiverAcount = await context.Acounts.FirstOrDefaultAsync(acount => acount.Id == receiverId);
+            receiverAcount.Balance += amount;
+            await context.SaveChangesAsync();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+    public async Task<int > ValidateId(int id)
+    {
+        if (id <= 0)
+            throw new ArgumentNullException();
+        var dbContext = _dbContextFactory.CreateDbContext();
+        Acount Acount= await dbContext.Acounts.FirstOrDefaultAsync(acout => acout.Id == id);
+        if (Acount == null)
+            return 0;
+        return Acount.Id;
+    }
+
 }

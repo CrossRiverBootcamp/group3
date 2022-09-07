@@ -46,4 +46,5 @@ public class CustomerStorage : ICustomerStorage
         var dbContext = _dbContextFactory.CreateDbContext();
         return (await dbContext.Customers.FirstOrDefaultAsync(customer => customer.Email.Equals(email)))?.Email;
     }
+   
 }
