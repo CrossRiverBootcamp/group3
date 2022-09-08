@@ -4,11 +4,8 @@ namespace Ttransaction.Storage
 {
     public interface ITransactionStorage
     {
-        public Task<Transaction> CreateTransaction(Transaction transaction);
-        
-
-
-
+        public Task CreateTransaction(Transaction transaction);
+        public Task UpdateTransactionStatus(string transactionId, string? failureReason);
 
     }
 }

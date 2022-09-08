@@ -4,15 +4,12 @@ import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router'
 import { HomePageComponent } from './modules/home-page/home-page.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
-  {path:'home-page',component:HomePageComponent},
+  { path: 'homePage', component: HomePageComponent },
   { path: 'acount',loadChildren: () => import('./modules/acount/acount.module')
   .then(m => m.AcountModule),
   pathMatch: 'prefix' },
-  { path: 'acount',loadChildren: () => import('./modules/acount/acount.module')
-  .then(m => m.AcountModule),
-  pathMatch: 'prefix' }
- 
+  {path:'transaction',loadChildren:()=>import('./modules/transaction/transaction.module')
+.then(m=>m.TransactionModule)} 
 ]
 
 @NgModule({
