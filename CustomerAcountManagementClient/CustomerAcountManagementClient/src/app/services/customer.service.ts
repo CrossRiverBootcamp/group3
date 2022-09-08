@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class customerService {
+export class CustomerService {
   acountId!: number;
   constructor(private _http: HttpClient, private router: Router) { }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { customerService } from 'src/app/services/customer.service';
+import { CustomerService } from 'src/app/services/customer.service';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/models/customer.moder';
 
@@ -13,7 +13,7 @@ export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   hide: boolean = false;
   newCustomer!:Customer;
-  constructor(private _customerService: customerService, private router: Router) { }
+  constructor(private _customerService: CustomerService, private router: Router) { }
   ngOnInit(): void {
     this.registerForm = new FormGroup({
       "firstName": new FormControl("", Validators.required),

@@ -1,6 +1,6 @@
 ﻿public enum Status
 {
-    processing,
+    Processing,
     Success,
-    Fail
+    Failure
 }

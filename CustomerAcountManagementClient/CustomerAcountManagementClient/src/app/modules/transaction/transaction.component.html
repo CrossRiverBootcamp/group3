@@ -1,0 +1,15 @@
+<form [formGroup]="addTransactionForm">
+    <mat-form-field  appearance="fill">
+      <mat-label>To Acount</mat-label>
+      <input matInput formControlName="toAcount">
+    </mat-form-field>
+
+    <mat-form-field  appearance="fill">
+      <mat-label>Amount</mat-label>
+      <input matInput formControlName="amount" />
+    </mat-form-field>
+
+    <button  (click)="addTransaction()" [disabled]="addTransactionForm.invalid">make transaction</button>
+
+  </form>
+

@@ -2,4 +2,6 @@
 <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="navigateToLogin()">log in</button>
     <button mat-menu-item (click)="navigateToRegister()">register</button>
+    <button mat-menu-item (click)="navigateToAddTransaction()" [disabled]="!this._customerService.acountId">make transaction</button>
 </mat-menu>
+<router-outlet></router-outlet>
