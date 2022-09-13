@@ -24,8 +24,9 @@ namespace Ttransaction.Storage.Migrations
 
             modelBuilder.Entity("Ttransaction.Storage.Entities.Transaction", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -34,7 +35,6 @@ namespace Ttransaction.Storage.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FailureReason")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FromAccountID")

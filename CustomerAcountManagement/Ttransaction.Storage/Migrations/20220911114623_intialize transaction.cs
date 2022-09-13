@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Ttransaction.Storage.Migrations
 {
-    public partial class initialzeTransactiontable : Migration
+    public partial class intializetransaction : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,13 +13,13 @@ namespace Ttransaction.Storage.Migrations
                 name: "Transactions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FromAccountID = table.Column<int>(type: "int", nullable: false),
                     ToAccountID = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     status = table.Column<int>(type: "int", maxLength: 100, nullable: false),
-                    FailureReason = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FailureReason = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

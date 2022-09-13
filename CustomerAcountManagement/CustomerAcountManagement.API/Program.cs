@@ -1,5 +1,11 @@
 using Serilog;
 using CustomerAcountManagement.Service;
+using CustomerAcountManagement.Storage;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using NServiceBus;
+using NServiceBus.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
@@ -22,13 +28,51 @@ Log.Logger = new LoggerConfiguration().
     ReadFrom.Configuration(configuration).
     Enrich.FromLogContext().
     CreateLogger();
+
+var databaseConnection = builder.Configuration.GetConnectionString("BankDB");
+
+var NSBConnection = builder.Configuration.GetConnectionString("NSB");
+var queueName = builder.Configuration.GetSection("Queues:AccountAPIQueue:Name").Value;
+var rabbitMQConnection = builder.Configuration.GetConnectionString("RabbitMQ");
+
+builder.Host.UseNServiceBus(hostBuilderContext =>
+{
+    var endpointConfiguration = new EndpointConfiguration("Acount");
+
+    endpointConfiguration.EnableInstallers();
+    endpointConfiguration.EnableOutbox();
+
+    var persistence = endpointConfiguration.UsePersistence<SqlPersistence>();
+    persistence.ConnectionBuilder(
+    connectionBuilder: () =>
+    {
+        return new SqlConnection(NSBConnection);
+    });
+
+    var dialect = persistence.SqlDialect<SqlDialect.MsSqlServer>();
+
+    var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
+    transport.ConnectionString(rabbitMQConnection);
+    transport.UseConventionalRoutingTopology(QueueType.Quorum);
+
+    var conventions = endpointConfiguration.Conventions();
+    //conventions.DefiningEventsAs(type => type.Namespace == "NSB.Messages.Events");
+    //conventions.DefiningCommandsAs(type => type.Namespace == "NSB.Messages.Commands");
+    return endpointConfiguration;
+});
 // Add services to the container.
 
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IAcountService, AcountService>();
+<<<<<<< HEAD
 builder.Services.AddScoped<IOperationService, OperationService>();
+||||||| 1648df4
+=======
+builder.Services.AddScoped<IAcountStorage, AcountStorage>();
+
+>>>>>>> 361f75a924f2f96eb02396b6e6bb739872417bda
 builder.Services.AddBLDependencies(builder.Configuration);
 
 

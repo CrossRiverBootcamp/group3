@@ -10,6 +10,10 @@ import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {  MatToolbarModule } from '@angular/material/toolbar';
+import {MatButtonModule} from '@angular/material/button';
+
+
 
 
 const materialComponents = [
@@ -22,7 +26,9 @@ const materialComponents = [
   MatTableModule,
   MatPaginatorModule,
   MatDialogModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatToolbarModule,
+  MatButtonModule
 ]
 @NgModule({
   declarations: [],

@@ -20,7 +20,7 @@ public class AcountService : IAcountService
     {
         try
         {
-            Acount acount = await _AcountStorage.GetAcountInfo(acountId);
+            Storage.Entities.Acount acount = await _AcountStorage.GetAcountInfo(acountId);
             if (acount != null)
                 return _mapper.Map<AcountInfoDTO>(acount);
             throw new Exception("Acount does not exist");

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 
+
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',

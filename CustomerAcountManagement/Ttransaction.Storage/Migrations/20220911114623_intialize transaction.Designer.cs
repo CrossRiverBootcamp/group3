@@ -12,8 +12,8 @@ using Ttransaction.Storage.Entities;
 namespace Ttransaction.Storage.Migrations
 {
     [DbContext(typeof(TransationDBContext))]
-    [Migration("20220908064122_initialze Transaction table")]
-    partial class initialzeTransactiontable
+    [Migration("20220911114623_intialize transaction")]
+    partial class intializetransaction
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,8 +26,9 @@ namespace Ttransaction.Storage.Migrations
 
             modelBuilder.Entity("Ttransaction.Storage.Entities.Transaction", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -36,7 +37,6 @@ namespace Ttransaction.Storage.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FailureReason")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FromAccountID")

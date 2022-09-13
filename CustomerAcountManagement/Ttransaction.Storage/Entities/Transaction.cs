@@ -1,12 +1,14 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ttransaction.Storage.Entities;
 
 public class Transaction
 {
-    [Key]
-    public string Id { get; set; }
+    
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid Id { get; set; }
     [Required]
     public int FromAccountID { get; set; }
     [Required]
@@ -16,5 +18,5 @@ public class Transaction
     public DateTime Date { get; set; }
     [MaxLength(100)]
     public Status status { get; set; }
-    public string FailureReason { get; set; }
+    public string? FailureReason { get; set; }
 }

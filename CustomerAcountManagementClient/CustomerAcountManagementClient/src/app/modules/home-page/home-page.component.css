@@ -1,0 +1,8 @@
+.backGround {
+    background-image: url(..\..\images\background.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+.spacer {
+    flex: 1 1 auto;
+  }

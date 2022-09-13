@@ -46,7 +46,7 @@ public class CustomerService : ICustomerService
             await _customerStorage.Register(customer);
             try
             {
-                Acount acount = new Acount();
+                Storage.Entities.Acount acount = new Storage.Entities.Acount();
                 acount.CustomerId = customer.Id;
                 await _AcountStorage.CreateAcount(acount);
             }

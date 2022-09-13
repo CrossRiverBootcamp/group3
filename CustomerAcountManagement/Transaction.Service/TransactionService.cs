@@ -22,7 +22,6 @@ public class TransactionService : ITransactionService
         try
         {
             Ttransaction.Storage.Entities.Transaction transaction = _mapper.Map<Ttransaction.Storage.Entities.Transaction>(transactionDTO);
-            transaction.Id = Guid.NewGuid().ToString();
             transaction.Date=DateTime.Now;
             await _transactionStorage.CreateTransaction(transaction);
             Payload payload = new() {
@@ -39,7 +38,7 @@ public class TransactionService : ITransactionService
 
         }
     }
-    public async Task UpdateTransactionStatus(string transactionId, string? failureReason)
+    public async Task UpdateTransactionStatus(Guid transactionId, string? failureReason)
     {
         try
         {
