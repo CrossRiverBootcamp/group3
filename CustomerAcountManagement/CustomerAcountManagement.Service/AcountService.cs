@@ -1,7 +1,7 @@
 using AutoMapper;
 using DTO;
 using CustomerAcountManagement.Storage;
-using CustomerAcountManagement.Storage.Entities;
+
 
 namespace CustomerAcountManagement.Service;
 
@@ -19,7 +19,7 @@ public class AcountService : IAcountService
     {
         try
         {
-            Acount acount = await _AcountStorage.GetAcountInfo(acountId);
+            Storage.Entities.Acount acount = await _AcountStorage.GetAcountInfo(acountId);
             if (acount != null)
                 return _mapper.Map<AcountInfoDTO>(acount);
             throw new Exception("Acount does not exist");

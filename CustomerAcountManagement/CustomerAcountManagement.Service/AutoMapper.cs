@@ -9,7 +9,7 @@ public class AutoMapper : Profile
     {
         CreateMap<RegisterDTO, Customer>().ReverseMap();
         CreateMap<Customer, AcountInfoDTO>().ReverseMap();
-        CreateMap<Acount,AcountInfoDTO>().IncludeMembers(acount=>acount.Customer).ReverseMap();
+        CreateMap<Storage.Entities.Acount,AcountInfoDTO>().IncludeMembers(acount=>acount.Customer).ReverseMap();
 
     }
 

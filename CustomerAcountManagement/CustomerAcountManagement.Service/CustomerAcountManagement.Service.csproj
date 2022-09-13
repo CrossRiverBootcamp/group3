@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CustomerAcountManagement.Storage\CustomerAcountManagement.Storage.csproj" />
     <ProjectReference Include="..\DTO\DTO.csproj" />
+    <ProjectReference Include="..\NSB.Messages\NSB.Messages.csproj" />
   </ItemGroup>
 
 </Project>

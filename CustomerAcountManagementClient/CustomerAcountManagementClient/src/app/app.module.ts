@@ -5,12 +5,16 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AcountModule } from './modules/acount/acount.module';
 import { HomePageComponent } from './modules/home-page/home-page.component';
-import{MaterialModule} from './modules/material/material/material.module'
+import{MaterialModule} from './modules/material/material/material.module';
+import { NotFoundPageComponent } from './modules/not-found-page/not-found-page.component'
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomePageComponent
+    HomePageComponent,
+    NotFoundPageComponent,
+
+
   ],
   imports: [
     BrowserModule,

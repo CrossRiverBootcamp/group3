@@ -5,8 +5,8 @@ using System.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using NSB.Messages.Commands;
 
-using IHost host = Host.CreateDefaultBuilder(args)
-       .Build();
+//using IHost host = Host.CreateDefaultBuilder(args)
+//       .Build();
 
 Console.Title = "Transaction.NSB";
 var defaultFactory = LogManager.Use<DefaultFactory>();
@@ -25,27 +25,27 @@ routing.RouteToEndpoint(typeof(UpdateTransactionStatus), "Transaction");
 var recoverability = endpointConfiguration.Recoverability();
 recoverability.Immediate(
     customizations: imeddiate =>
-    imeddiate.NumberOfRetries(31)
+    imeddiate.NumberOfRetries(2)
     );
 recoverability.Delayed(
     customizations: delayed =>
     {
-        delayed.NumberOfRetries(3);
+        delayed.NumberOfRetries(2);
     });
 
 
 
-var connectionToDB = "Server=localhost;database=BankNSB;Trusted_Connection=True;";
+var connectionToDB = "Server=localhost;database=NServiceBusTransaction;Trusted_Connection=True;";
 var persistence = endpointConfiguration.UsePersistence<SqlPersistence>();
 var subscriptions = persistence.SubscriptionSettings();
 subscriptions.CacheFor(TimeSpan.FromMinutes(1));
+var dialect = persistence.SqlDialect<SqlDialect.MsSqlServer>();
 persistence.ConnectionBuilder(
     connectionBuilder: () =>
     {
         return new SqlConnection(connectionToDB);
     });
-var dialect = persistence.SqlDialect<SqlDialect.MsSqlServer>();
-dialect.Schema("NSB");
+
 endpointConfiguration.EnableInstallers();
 endpointConfiguration.EnableOutbox();
 endpointConfiguration.AuditProcessedMessagesTo("audit");

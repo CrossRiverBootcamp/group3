@@ -6,7 +6,9 @@ namespace NSB.Messages.Events;
 public class Payload : IEvent
 {
     [Required]
-    public string Id { get; set; }
+    public Guid SagaId { get; set; }
+    [Required]
+    public Guid Id { get; set; }
     [Required]
     public int FromAcountId { get; set; }
     [Required]

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using NServiceBus;
 using NServiceBus.Logging;
 
+
 public class Program
 {
     public static void Main(string[] args)
@@ -16,10 +17,13 @@ public class Program
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
             .ConfigureServices(async (hostContext, services) =>
+
             {
-                 services.AddScoped<IAcountStorage, AcountStorage>();
+               
                 Console.Title = "Acount";
                 var endpointConfiguration = new EndpointConfiguration("Acount");
+                var containerSettings = endpointConfiguration.UseContainer(new DefaultServiceProviderFactory());
+                containerSettings.ServiceCollection.AddScoped<IAcountStorage, AcountStorage>();
                 var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
                 transport.UseConventionalRoutingTopology(QueueType.Quorum);
                 transport.ConnectionString("host = localhost");
@@ -35,7 +39,7 @@ public class Program
                     });
                 var defaultFactory = LogManager.Use<DefaultFactory>();
                 defaultFactory.Level(LogLevel.Info);
-                var connection = "Server=localhost;database=NServiceBus;Trusted_Connection=True;";
+                var connection = "Server=localhost;database=NServiceBusAcount;Trusted_Connection=True;";
                 var persistence = endpointConfiguration.UsePersistence<SqlPersistence>();
                 var subscriptions = persistence.SubscriptionSettings();
                 //subscriptions.CacheFor(TimeSpan.FromMinutes(1));
@@ -45,7 +49,6 @@ public class Program
                         return new SqlConnection(connection);
                     });
                 var dialect = persistence.SqlDialect<SqlDialect.MsSqlServer>();
-                dialect.Schema("NSB");
                 endpointConfiguration.EnableInstallers();
                 endpointConfiguration.EnableOutbox();
                 endpointConfiguration.AuditProcessedMessagesTo("audit");

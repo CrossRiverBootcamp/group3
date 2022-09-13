@@ -1,5 +1,4 @@
 ﻿using CustomerAcountManagement.Storage;
-using Microsoft.Extensions.Hosting;
 using NSB.Messages.Commands;
 using NSB.Messages.Events;
 using NServiceBus;
@@ -8,12 +7,12 @@ namespace Acount.NSB
 {
     public class IHandleTrnsferMoney : IHandleMessages<TransferMoney>
     {
-        private readonly AcountStorage _AcountStorage;
-        private readonly IHost _host;
-        public IHandleTrnsferMoney(AcountStorage AcountStorage, IHost host)
+        private readonly IAcountStorage _AcountStorage;
+
+        public IHandleTrnsferMoney(IAcountStorage AcountStorage)
         {
             _AcountStorage = AcountStorage;
-            _host = host;
+            
         }
         public async Task Handle(TransferMoney message, IMessageHandlerContext context)
         {
@@ -31,41 +30,44 @@ namespace Acount.NSB
                 bool UpdateBalance = await _AcountStorage.UpdateBalance(message.ToAcountId, message.FromAcountId, message.Amount);
                 if (UpdateBalance == false)
                     throw new Exception("The acounts were not updated with the new balance");
-                var transferrd = new Transferred
+                Transferred transferred = new Transferred
                 {
+
+                    SagaId = message.SagaId,
                     Id = Guid.NewGuid(),
                     Result = true,
                     FailureReason = null
                 };
-                await context.Publish(transferrd);
+                await context.Publish(transferred);
             }
             catch (Exception ex)
             {
-                var transferrd = new Transferred
+                Transferred transferred = new Transferred
                 {
+                    SagaId =message.SagaId,
                     Id = Guid.NewGuid(),
                     Result = false,
                     FailureReason = null
                 };
                 if (ex.Message == "Sender acount does not exist")
                 {
-                    transferrd.FailureReason = "Sender acount does not exist";
-                    await context.Publish(transferrd);
+                    transferred.FailureReason = "Sender acount does not exist";
+                    await context.Publish(transferred);
                 }
                 if (ex.Message == "Receiver acount does not exist")
                 {
-                    transferrd.FailureReason = "Receiver acount does not exist";
-                    await context.Publish(transferrd);
+                    transferred.FailureReason = "Receiver acount does not exist";
+                    await context.Publish(transferred);
                 }
                 if (ex.Message == "You don't have enough money in your acount")
                 {
-                    transferrd.FailureReason = "You don't have enough money in your acount";
-                    await context.Publish(transferrd);
+                    transferred.FailureReason = "You don't have enough money in your acount";
+                    await context.Publish(transferred);
                 }
                 if (ex.Message == "The acounts were not updated with the new balance")
                 {
-                    transferrd.FailureReason = "The acounts were not updated with the new balance";
-                    await context.Publish(transferrd);
+                    transferred.FailureReason = "The acounts were not updated with the new balance";
+                    await context.Publish(transferred);
                 }
 
             }

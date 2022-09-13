@@ -24,7 +24,7 @@ namespace Ttransaction.Storage
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateTransactionStatus(string transactionId, string? failureReason)
+        public async Task UpdateTransactionStatus(Guid transactionId, string? failureReason)
         {
             if (transactionId == null)
                 throw new ArgumentNullException();

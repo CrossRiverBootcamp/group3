@@ -11,6 +11,6 @@ public class AutoMapper:Profile
     public AutoMapper()
     {
         CreateMap<Payload, TransferMoney>().ReverseMap();
-        CreateMap<Trasferred, UpdateTransactionStatus>().ReverseMap();
+        CreateMap<Transferred, UpdateTransactionStatus>().ReverseMap();
     }
 }
