@@ -24,15 +24,13 @@ export class LoginComponent implements OnInit {
     this.hide = !this.hide;
   }
   async logIn() {
-    try {
+   
       this.customer = {
         email: this.loginForm?.value.email,
         customerPassword: this.loginForm?.value.password
       }
-      await this._customerService.logIn(this.customer).catch()
-    }
-    catch{
-      alert("The email or password you inserted is not correct, maybe you have to sign up?")
-    }
+      await this._customerService.logIn(this.customer)
+   
+    
   }
 }  

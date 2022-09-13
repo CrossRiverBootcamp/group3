@@ -1,0 +1,49 @@
+<div class="mat-elevation-z8">
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+    <table mat-table [dataSource]="dataSource">
+  
+      <!-- operation Column -->
+      <ng-container matColumnDef="debit">
+        <th mat-header-cell *matHeaderCellDef>operation </th>
+          <td mat-cell *matCellDef="let element" >
+            <div *ngIf="element.debit">
+            debit
+          </div> 
+          <div *ngIf="!element.debit">
+           credit
+          </div>
+         </td>       
+        
+      </ng-container>
+  
+      <!-- thirdParty Column -->
+      <ng-container matColumnDef="thirdParty" >
+        <th mat-header-cell *matHeaderCellDef> third party </th>
+        <td mat-cell *matCellDef="let element" (click)="showCustomerDetails(element.thirdParty)"> {{element.thirdParty}} </td>
+      </ng-container >
+  
+      <!-- amount Column -->
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef> amount </th>
+        <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+      </ng-container>
+  
+      <!-- balance Column -->
+      <ng-container matColumnDef="balance">
+        <th mat-header-cell *matHeaderCellDef> balance </th>
+        <td mat-cell *matCellDef="let element"> {{element.balance}} </td>
+      </ng-container>
+        <!-- date Column -->
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> date </th>
+            <td mat-cell *matCellDef="let element"> {{element.date|date:'dd/MM/yyyy'}} </td>
+          </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator #paginator [length]="totalRows" [pageIndex]="currentPage" [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page">>
+        </mat-paginator>
+  </div>

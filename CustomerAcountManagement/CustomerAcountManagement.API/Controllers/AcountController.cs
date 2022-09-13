@@ -32,6 +32,22 @@ public class AcountController : ControllerBase
             throw ex;
         }
     }
+    [HttpGet("Customer/{acountId}")]
+    public async Task<ActionResult<ThirdPartyDetails>> GetCustomerByAcountId(int acountId)
+    {
+        try
+        {
+            if (acountId == 0)
+                return BadRequest();
+            return Ok(await _AcountService.GetCustomerByAcountId(acountId));
+        }
+        catch(Exception ex)
+        {
+            throw ex;
+        }
+
+
+    }
 
 }
 

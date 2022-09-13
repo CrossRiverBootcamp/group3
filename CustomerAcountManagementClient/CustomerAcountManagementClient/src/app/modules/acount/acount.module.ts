@@ -7,6 +7,7 @@ import{HttpClientModule}from '@angular/common/http';
 import { MaterialModule } from '../material/material/material.module';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule  } from "@angular/forms";
+import { OperationsHistoryComponent } from './operations-history/operations-history.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
   declarations: [
     LoginComponent,
     RegisterComponent,
-    AcountInfoComponent
+    AcountInfoComponent,
+    OperationsHistoryComponent
    
   ],
   imports: [
@@ -33,7 +35,8 @@ const routes: Routes = [
   exports:[
     AcountInfoComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    OperationsHistoryComponent
   ]
   
 })

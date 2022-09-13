@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using CustomerAcountManagement.Storage.Entities;
+using CustomerAcountManagement.Storage.models;
 
 namespace CustomerAcountManagement.Storage;
 
@@ -32,6 +33,21 @@ public class AcountStorage : IAcountStorage
         }
         var context = _dbContextFactory.CreateDbContext();
         return await context.Acounts.Include(acount => acount.Customer).FirstOrDefaultAsync(acount => acount.Id == acountId);
+    }
+    public async Task<CustomerModel> GetCustomerByAcountId(int acountId)
+    {
+        if (acountId == null)
+            throw new ArgumentNullException();
+        var dbContext=_dbContextFactory.CreateDbContext();
+        return await dbContext.Acounts
+            .Where(acount => acount.Id == acountId)
+            .Include(acount => acount.Customer)
+            .Select(acount => new CustomerModel
+            {
+                FirstName = acount.Customer.FirstName,
+                LastName = acount.Customer.LastName,
+                Email = acount.Customer.Email
+            }).FirstOrDefaultAsync();
     }
     public async Task<int> GetAcountIdByCustomerId(int customerId)
     {

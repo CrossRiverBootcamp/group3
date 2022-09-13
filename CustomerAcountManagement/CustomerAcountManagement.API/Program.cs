@@ -3,7 +3,7 @@ using CustomerAcountManagement.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
-string AllowAll = "AllowAll";//
+string AllowAll = "AllowAll";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(AllowAll
@@ -28,6 +28,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IAcountService, AcountService>();
+builder.Services.AddScoped<IOperationService, OperationService>();
 builder.Services.AddBLDependencies(builder.Configuration);
 
 

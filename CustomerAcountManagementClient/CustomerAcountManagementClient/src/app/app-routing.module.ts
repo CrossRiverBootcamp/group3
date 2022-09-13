@@ -26,8 +26,5 @@ export class AppRoutingModule {
 
   ngOnInit() {
 
-    // this.parameterValue = this._activatedRoute.snapshot.params.parameter
-    //this._router.navigate(['first/4'])
-    //this.parameterValue = this._activatedRoute.snapshot.params.parameter
 }
 }

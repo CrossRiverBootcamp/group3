@@ -5,8 +5,7 @@ using System.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using NSB.Messages.Commands;
 
-using IHost host = Host.CreateDefaultBuilder(args)
-       .Build();
+
 
 Console.Title = "Transaction.NSB";
 var defaultFactory = LogManager.Use<DefaultFactory>();
