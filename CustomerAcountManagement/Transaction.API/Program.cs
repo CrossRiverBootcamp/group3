@@ -32,47 +32,33 @@ Log.Logger = new LoggerConfiguration().
     CreateLogger();
 #endregion
 
-//#region NServiceBus configuration
-//builder.Host.UseNServiceBus(hostBuilderContext =>
-//{
-//    var endpointConfiguration = new EndpointConfiguration("Transaction");
-//    var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
-//    transport.ConnectionString(builder.Configuration.GetConnectionString("RabbitMQ"));
-//    transport.UseConventionalRoutingTopology(QueueType.Quorum);
-//    endpointConfiguration.SendOnly();
-//    var connectionToDB = builder.Configuration.GetConnectionString("TransactionNSB");
-//    endpointConfiguration.AuditProcessedMessagesTo("audit");
-//    endpointConfiguration.SendFailedMessagesTo("error");
-//    return endpointConfiguration;
-//});
-//#endregion​
 #region NServiceBus configurations
 var databaseConnection = builder.Configuration.GetConnectionString("TransactionNSB");
 
 var NSBConnection = builder.Configuration.GetConnectionString("NSB");
-var queueName = builder.Configuration.GetSection("Queues:AccountAPIQueue:Name").Value;
+var queueName = builder.Configuration.GetSection("Queues:AcountAPIQueue:Name").Value;
 var rabbitMQConnection = builder.Configuration.GetConnectionString("RabbitMQ");
 
 builder.Host.UseNServiceBus(hostBuilderContext =>
 {
     var endpointConfiguration = new EndpointConfiguration("Transaction");
-    
+
     endpointConfiguration.EnableInstallers();
     endpointConfiguration.EnableOutbox();
-    
+
     var persistence = endpointConfiguration.UsePersistence<SqlPersistence>();
     persistence.ConnectionBuilder(
     connectionBuilder: () =>
     {
         return new SqlConnection(NSBConnection);
     });
-    
+
     var dialect = persistence.SqlDialect<SqlDialect.MsSqlServer>();
 
     var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
     transport.ConnectionString(rabbitMQConnection);
     transport.UseConventionalRoutingTopology(QueueType.Quorum);
-    
+
     var conventions = endpointConfiguration.Conventions();
     //conventions.DefiningEventsAs(type => type.Namespace == "NSB.Messages.Events");
     //conventions.DefiningCommandsAs(type => type.Namespace == "NSB.Messages.Commands");

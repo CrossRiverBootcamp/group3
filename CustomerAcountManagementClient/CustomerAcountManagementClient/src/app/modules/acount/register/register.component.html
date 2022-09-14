@@ -1,65 +1,30 @@
-<!-- <body class="backGround">
-  <div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
-    <mat-card class="box">
-      <mat-card-header>
-        <mat-card-title>Register</mat-card-title>
-      </mat-card-header>
-      <form [formGroup]="registerForm" class="example-form">
-        <mat-card-content>
-          <mat-form-field class="example-full-width">
-            <input matInput formControlName="firstName" placeholder="First Name">
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <input matInput formControlName="lastName" placeholder="last name">
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <input matInput formControlName="email" placeholder="Email">
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <input matInput formControlName="password" placeholder="Password" [type]="hide ? 'password' : 'text'" />
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-          </mat-form-field>
-         </mat-card-content>
-        <button mat-stroked-button color="accent" class="btn-block" (click)="register()" [disabled]="registerForm.invalid">Register</button>
-      </form>
-    </mat-card>
-  </div>
-</body> -->
-
 <body>
   <mat-toolbar>
     <span>Registration</span>
   </mat-toolbar>
   <mat-card class="my-card">
      <mat-card-content>
-        <form class="my-form">
-          <mat-form-field class="full-width">
-            <mat-label>First Name</mat-label>
-            <input  matInput  placeholder="First name"  name="fname"  required>
-         </mat-form-field>
+        <form [formGroup]="registerForm" class="my-form">
+         <mat-form-field class="full-width">
+          <mat-label>First Name</mat-label>
+          <input  matInput formControlName="firstName" placeholder="First Name" name="fname"  required>
+       </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Last Name</mat-label>
-            <input  matInput  placeholder="Last Name" name="lname"  required>
-         </mat-form-field>
-         <mat-form-field class="full-width">
-            <mat-label>Address</mat-label>
-            <input  matInput  placeholder="Address" name="address"  required>
+            <input  matInput formControlName="lastName" placeholder="Last Name" name="lname"  required>
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Email</mat-label>
-            <input  matInput  placeholder="Email" name="email">
+            <input  matInput  formControlName="email" placeholder="Email" name="email">
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Password</mat-label>
-            <input  matInput  placeholder="Password"  name="password">
+            <input  matInput formControlName="password" placeholder="Password"  name="password">
          </mat-form-field>
         </form>
      </mat-card-content>
      <mat-card-actions>
-      <button mat-raised-button (click)="register()" color="primary">REGISTER</button>
+      <button mat-raised-button (click)="register()" [disabled]="registerForm.invalid" color="primary">REGISTER</button>
      </mat-card-actions>
   </mat-card>
 </body>

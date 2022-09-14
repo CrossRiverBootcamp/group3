@@ -27,8 +27,8 @@ public class TransactionService : ITransactionService
             Payload payload = new() {
                 TransactionId= transaction.Id,
                 Id = Guid.NewGuid(),
-                FromAcountId = transactionDTO.FromAccountID,
-                ToAcountId = transactionDTO.ToAccountID,
+                FromAcountId = transactionDTO.FromAcountID,
+                ToAcountId = transactionDTO.ToAcountID,
                 Amount=transactionDTO.Amount
             };
             

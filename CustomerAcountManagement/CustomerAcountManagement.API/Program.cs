@@ -9,7 +9,7 @@ using NServiceBus.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
-string AllowAll = "AllowAll";//
+string AllowAll = "AllowAll";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(AllowAll
@@ -32,7 +32,7 @@ Log.Logger = new LoggerConfiguration().
 var databaseConnection = builder.Configuration.GetConnectionString("BankDB");
 
 var NSBConnection = builder.Configuration.GetConnectionString("NSB");
-var queueName = builder.Configuration.GetSection("Queues:AccountAPIQueue:Name").Value;
+var queueName = builder.Configuration.GetSection("Queues:AcountAPIQueue:Name").Value;
 var rabbitMQConnection = builder.Configuration.GetConnectionString("RabbitMQ");
 
 builder.Host.UseNServiceBus(hostBuilderContext =>
@@ -66,8 +66,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IAcountService, AcountService>();
-builder.Services.AddScoped<IAcountStorage, AcountStorage>();
-
+builder.Services.AddScoped<IOperationService, OperationService>();
 builder.Services.AddBLDependencies(builder.Configuration);
 
 

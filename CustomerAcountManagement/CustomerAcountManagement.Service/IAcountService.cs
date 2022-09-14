@@ -7,4 +7,5 @@ public interface IAcountService
 {
     public Task<bool> PostAcount(AcountDTO newAcount);
     public Task<AcountInfoDTO> GetAcount(int acountId);
+    public Task<ThirdPartyDetails> GetCustomerByAcountId(int acountId);
 }

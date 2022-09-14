@@ -34,10 +34,10 @@ this.newCustomer={
   password:this.registerForm?.value.password
 }
 
-this._customerService.register(this.newCustomer).subscribe((success:boolean)=>{
-  if(!success)
-  alert("registering failed")
-  this.router.navigate(['home-page']);
-}) }
+this._customerService.register(this.newCustomer).subscribe(
+  (success:boolean)=>
+  this.router.navigate(['home-page']),
+  (error: any)=>alert(error))
+ }
 
 }

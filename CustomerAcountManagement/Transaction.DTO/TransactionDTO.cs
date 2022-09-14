@@ -10,9 +10,9 @@ namespace Transaction.DTO;
 public class TransactionDTO
 {
     [Required]
-    public int FromAccountID { get; set; }
+    public int FromAcountID { get; set; }
     [Required]
-    public int ToAccountID { get; set; }
+    public int ToAcountID { get; set; }
     [Required]
     public int Amount { get; set; }
 }

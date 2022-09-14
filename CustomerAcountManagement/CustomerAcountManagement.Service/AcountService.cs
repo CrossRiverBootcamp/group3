@@ -1,7 +1,8 @@
 using AutoMapper;
 using DTO;
 using CustomerAcountManagement.Storage;
-
+using CustomerAcountManagement.Storage.Entities;
+using CustomerAcountManagement.Storage.models;
 
 namespace CustomerAcountManagement.Service;
 
@@ -32,7 +33,15 @@ public class AcountService : IAcountService
 
         }
     }
-
+    public async Task<ThirdPartyDetails> GetCustomerByAcountId(int acountId)
+    {
+        if (acountId == 0)
+            throw new ArgumentNullException();
+        CustomerModel customer=await _AcountStorage.GetCustomerByAcountId(acountId);
+        if (customer == null)
+            throw new Exception("Customer does not exist");
+        return _mapper.Map<ThirdPartyDetails>(customer);
+    }
     public Task<bool> PostAcount(AcountDTO acountDTO)
     {
         throw new NotImplementedException();

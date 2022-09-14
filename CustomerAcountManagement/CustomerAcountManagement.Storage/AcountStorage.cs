@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using CustomerAcountManagement.Storage.Entities;
+using CustomerAcountManagement.Storage.models;
 
 namespace CustomerAcountManagement.Storage;
 
@@ -33,6 +34,21 @@ public class AcountStorage : IAcountStorage
         var context = _dbContextFactory.CreateDbContext();
         return await context.Acounts.Include(acount => acount.Customer).FirstOrDefaultAsync(acount => acount.Id == acountId);
     }
+    public async Task<CustomerModel> GetCustomerByAcountId(int acountId)
+    {
+        if (acountId == null)
+            throw new ArgumentNullException();
+        var dbContext=_dbContextFactory.CreateDbContext();
+        return await dbContext.Acounts
+            .Where(acount => acount.Id == acountId)
+            .Include(acount => acount.Customer)
+            .Select(acount => new CustomerModel
+            {
+                FirstName = acount.Customer.FirstName,
+                LastName = acount.Customer.LastName,
+                Email = acount.Customer.Email
+            }).FirstOrDefaultAsync();
+    }
     public async Task<int> GetAcountIdByCustomerId(int customerId)
     {
         if (customerId == 0)
@@ -54,7 +70,7 @@ public class AcountStorage : IAcountStorage
 
 
     }
-    public async Task<bool> UpdateBalance(int receiverId, int senderId, int amount)
+    public async Task<bool> UpdateBalanceAndCreateOperations(int receiverId, int senderId, int amount, Guid transactionId)
     {
         if (receiverId == 0 || senderId == 0 || amount == 0)
             throw new ArgumentNullException();
@@ -65,6 +81,29 @@ public class AcountStorage : IAcountStorage
             senderAcount.Balance -= amount;
             Acount receiverAcount = await context.Acounts.FirstOrDefaultAsync(acount => acount.Id == receiverId);
             receiverAcount.Balance += amount;
+            DateTime operationTime = DateTime.Now;
+            Operation fromOperation = new()
+            {
+                AcountId = senderAcount.Id,
+                TransactionId = transactionId,
+                Debit = false,
+                TransactionAmount = amount,
+                Balance = senderAcount.Balance,
+                OperationTime = operationTime
+
+            };
+            Operation toOperation = new()
+            {
+                AcountId = receiverId,
+                TransactionId = transactionId,
+                Debit = true,
+                TransactionAmount = amount,
+                Balance = receiverAcount.Balance,
+                OperationTime = operationTime
+
+            };
+            context.Operations.Add(toOperation);
+            context.Operations.Add(fromOperation);
             await context.SaveChangesAsync();
             return true;
         }

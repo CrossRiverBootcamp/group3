@@ -1,4 +1,7 @@
-﻿using CustomerAcountManagement.Storage;
+﻿using AutoMapper;
+using CustomerAcountManagement.Service;
+using CustomerAcountManagement.Storage;
+using DTO;
 using NSB.Messages.Commands;
 using NSB.Messages.Events;
 using NServiceBus;
@@ -8,11 +11,18 @@ namespace Acount.NSB
     public class IHandleTrnsferMoney : IHandleMessages<TransferMoney>
     {
         private readonly IAcountStorage _AcountStorage;
-
-        public IHandleTrnsferMoney(IAcountStorage AcountStorage)
+        private readonly IOperationService _operationService;
+        private readonly IMapper _mapper;
+        public IHandleTrnsferMoney(IAcountStorage AcountStorage,IOperationService operationService,IMapper mapper)
         {
             _AcountStorage = AcountStorage;
-            
+            _operationService = operationService;
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<CustomerAcountManagement.Service.AutoMapper>();
+            });
+            _mapper = config.CreateMapper();
+
         }
         public async Task Handle(TransferMoney message, IMessageHandlerContext context)
         {
@@ -27,7 +37,7 @@ namespace Acount.NSB
                 bool senderBalance = await _AcountStorage.ValidateSenderBalance(message.Amount, message.FromAcountId);
                 if (senderBalance == false)
                     throw new Exception("You don't have enough money in your acount");
-                bool UpdateBalance = await _AcountStorage.UpdateBalance(message.ToAcountId, message.FromAcountId, message.Amount);
+                bool UpdateBalance = await _AcountStorage.UpdateBalanceAndCreateOperations(message.ToAcountId, message.FromAcountId, message.Amount,message.TransactionId);
                 if (UpdateBalance == false)
                     throw new Exception("The acounts were not updated with the new balance");
                 Transferred transferred = new Transferred
@@ -40,6 +50,7 @@ namespace Acount.NSB
                     FailureReason = null
                 };
                 await context.Publish(transferred);
+    
             }
             catch (Exception ex)
             {
@@ -72,12 +83,7 @@ namespace Acount.NSB
                 }
 
             }
-           
-
-
-
-
-
+            
         }
     }
 }

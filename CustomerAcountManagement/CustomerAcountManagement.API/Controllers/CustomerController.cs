@@ -39,7 +39,7 @@ public class CustomerController : ControllerBase
         try
         {
 
-            int acountId = (await _CustomerService.LogIn(logInDTO.Email, logInDTO.CustomerPassword));
+            int acountId = await _CustomerService.LogIn(logInDTO.Email, logInDTO.CustomerPassword);
             if (acountId == 0)
                 throw new Exception("Customer name or password are incorect");
             return Ok(acountId);

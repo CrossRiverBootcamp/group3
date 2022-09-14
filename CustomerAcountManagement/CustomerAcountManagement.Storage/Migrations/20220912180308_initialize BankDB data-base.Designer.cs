@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CustomerAcountManagement.Storage.Migrations
 {
     [DbContext(typeof(BankDBContext))]
-    [Migration("20220906103341_initialize bankDB")]
-    partial class initializebankDB
+    [Migration("20220912180308_initialize BankDB data-base")]
+    partial class initializeBankDBdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,6 +82,37 @@ namespace CustomerAcountManagement.Storage.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("CustomerAcountManagement.Storage.Entities.Operation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AcountId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Balance")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Debit")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("OperationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TransactionAmount")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TransactionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AcountId");
+
+                    b.ToTable("Operations");
+                });
+
             modelBuilder.Entity("CustomerAcountManagement.Storage.Entities.Acount", b =>
                 {
                     b.HasOne("CustomerAcountManagement.Storage.Entities.Customer", "Customer")
@@ -91,6 +122,17 @@ namespace CustomerAcountManagement.Storage.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("CustomerAcountManagement.Storage.Entities.Operation", b =>
+                {
+                    b.HasOne("CustomerAcountManagement.Storage.Entities.Acount", "Acount")
+                        .WithMany()
+                        .HasForeignKey("AcountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Acount");
                 });
 #pragma warning restore 612, 618
         }
