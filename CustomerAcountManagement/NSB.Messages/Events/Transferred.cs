@@ -11,7 +11,7 @@ namespace NSB.Messages.Events
     public class Transferred:IEvent
     {
         [Required]
-        public Guid SagaId { get; set; }
+        public Guid TransactionId { get; set; }
         [Required]
         public Guid Id { get; set; }
         public bool Result { get; set; }

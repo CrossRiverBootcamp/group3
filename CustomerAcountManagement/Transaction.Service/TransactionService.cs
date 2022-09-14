@@ -25,11 +25,13 @@ public class TransactionService : ITransactionService
             transaction.Date=DateTime.Now;
             await _transactionStorage.CreateTransaction(transaction);
             Payload payload = new() {
-                Id = transaction.Id,
+                TransactionId= transaction.Id,
+                Id = Guid.NewGuid(),
                 FromAcountId = transactionDTO.FromAccountID,
                 ToAcountId = transactionDTO.ToAccountID,
                 Amount=transactionDTO.Amount
             };
+            
             await _messageSession.Publish(payload);
 
         }

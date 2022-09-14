@@ -33,8 +33,9 @@ namespace Acount.NSB
                 Transferred transferred = new Transferred
                 {
 
-                    SagaId = message.SagaId,
-                    Id = Guid.NewGuid(),
+                    TransactionId = message.TransactionId,
+                    Id=message.Id,
+                    //Id = Guid.NewGuid(),
                     Result = true,
                     FailureReason = null
                 };
@@ -44,7 +45,7 @@ namespace Acount.NSB
             {
                 Transferred transferred = new Transferred
                 {
-                    SagaId =message.SagaId,
+                    TransactionId =message.TransactionId,
                     Id = Guid.NewGuid(),
                     Result = false,
                     FailureReason = null
@@ -71,9 +72,7 @@ namespace Acount.NSB
                 }
 
             }
-            //Operation operation = _mapper.Map<Operation>(operationDTO);
-            //operation.OperationTime = DateTime.Now;
-            //await _operationStorage.PostOperation(operation);
+           
 
 
 

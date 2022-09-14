@@ -15,11 +15,11 @@ public class UpdateTransactionStatusHandler : IHandleMessages<UpdateTransactionS
     {
         if (message.Result)
         {
-            await _transactionService.UpdateTransactionStatus(message.Id, null);
+            await _transactionService.UpdateTransactionStatus(message.TransactionId, null);
         }
         else
         {
-            await _transactionService.UpdateTransactionStatus(message.Id, message.FailureReason);
+            await _transactionService.UpdateTransactionStatus(message.TransactionId, message.FailureReason);
 
         }
     }

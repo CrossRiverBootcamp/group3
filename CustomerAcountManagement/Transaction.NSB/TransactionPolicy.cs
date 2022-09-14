@@ -25,14 +25,14 @@ IAmStartedByMessages<Transferred>
     protected override void ConfigureHowToFindSaga(SagaPropertyMapper<TransactionPolicyData> mapper)
     {
         mapper.MapSaga(sagaData => sagaData.Id)
-               .ToMessage<Payload>(message => message.SagaId)
-               .ToMessage<Transferred>(message => message.SagaId
+               .ToMessage<Payload>(message => message.TransactionId)
+               .ToMessage<Transferred>(message => message.TransactionId
               );
     }
     public async Task Handle(Payload message, IMessageHandlerContext context)
     {
         TransferMoney transferMoney = _mapper.Map<TransferMoney>(message);
-        transferMoney.Id=Guid.NewGuid();
+        transferMoney.Id = Guid.NewGuid();
         await context.Send(transferMoney);
     }
 
