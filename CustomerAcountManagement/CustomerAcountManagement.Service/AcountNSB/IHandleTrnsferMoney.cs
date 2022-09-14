@@ -44,8 +44,7 @@ namespace Acount.NSB
                 {
 
                     TransactionId = message.TransactionId,
-                    Id=message.Id,
-                    //Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid(),
                     Result = true,
                     FailureReason = null
                 };

@@ -36,7 +36,7 @@ export class CustomerService {
      return this._http.get(`${this.baseAcountUrl}AcountInfo/ ${this.acountId}`)
   }
   getOperationsHistory(pageNumber:number,numberOfRecords:number):Observable<Operation[]>{
-    return this._http.get<Operation[]>(`${this.baseOperationUrl}${1}/${pageNumber}/${numberOfRecords}`)
+    return this._http.get<Operation[]>(`${this.baseOperationUrl}${this.acountId}/${pageNumber}/${numberOfRecords}`)
   }
   getCustomerByAcountId(acountId:number):Observable<ThirdPartyDetails>{
    return this._http.get<ThirdPartyDetails>(`${this.baseAcountUrl}Customer/${acountId}`)

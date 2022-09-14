@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CustomerAcountManagement.Storage.Migrations
 {
-    public partial class initializeBankDBdatabase : Migration
+    public partial class intializebank : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

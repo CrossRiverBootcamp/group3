@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CustomerAcountManagement.Storage.Migrations
 {
     [DbContext(typeof(BankDBContext))]
-    [Migration("20220912180308_initialize BankDB data-base")]
-    partial class initializeBankDBdatabase
+    [Migration("20220914095827_intialize bank")]
+    partial class intializebank
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
