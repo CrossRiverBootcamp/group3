@@ -1,22 +1,13 @@
-<!-- <body class="backGround">
-    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-<mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="navigateToLogin()">log in</button>
-    <button mat-menu-item (click)="navigateToRegister()">register</button>
-    <button mat-menu-item (click)="navigateToAddTransaction()" [disabled]="!this._customerService.acountId">make transaction</button>
-</mat-menu>
-<router-outlet></router-outlet>
-</body> -->
 <body class="backGround">
     <mat-toolbar color="primary">
     <mat-toolbar-row>
-       <!-- <span>HOME</span> -->
        <span><a href="/">HOME</a></span>
        <span class="spacer"></span>
        <a mat-button  (click)="navigateToRegister()">Register</a>
        <a mat-button (click)="navigateToLogin()">Login</a>
        <a mat-button (click)="navigateToAddTransaction()" [disabled]="!this._customerService.acountId">Transaction</a>
-    </mat-toolbar-row>
+       <a mat-button (click)="navigateToOperationsHistory()" [disabled]="!this._customerService.acountId">Operations history</a>
+      </mat-toolbar-row>
  </mat-toolbar>
  <router-outlet></router-outlet>
 </body>

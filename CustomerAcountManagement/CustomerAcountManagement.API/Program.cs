@@ -32,7 +32,7 @@ Log.Logger = new LoggerConfiguration().
 var databaseConnection = builder.Configuration.GetConnectionString("BankDB");
 
 var NSBConnection = builder.Configuration.GetConnectionString("NSB");
-var queueName = builder.Configuration.GetSection("Queues:AccountAPIQueue:Name").Value;
+var queueName = builder.Configuration.GetSection("Queues:AcountAPIQueue:Name").Value;
 var rabbitMQConnection = builder.Configuration.GetConnectionString("RabbitMQ");
 
 builder.Host.UseNServiceBus(hostBuilderContext =>
@@ -66,13 +66,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IAcountService, AcountService>();
-<<<<<<< HEAD
 builder.Services.AddScoped<IOperationService, OperationService>();
-||||||| 1648df4
-=======
-builder.Services.AddScoped<IAcountStorage, AcountStorage>();
-
->>>>>>> 361f75a924f2f96eb02396b6e6bb739872417bda
 builder.Services.AddBLDependencies(builder.Configuration);
 
 

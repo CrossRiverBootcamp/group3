@@ -6,7 +6,7 @@ import { HomePageComponent } from './modules/home-page/home-page.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent},
-  { path: 'homePage', component: HomePageComponent },
+  { path: 'home-page', component: HomePageComponent },
   { path: 'acount',loadChildren: () => import('./modules/acount/acount.module')
   .then(m => m.AcountModule),
   pathMatch: 'prefix' },

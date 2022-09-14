@@ -31,8 +31,32 @@ public class OperationService : IOperationService
         int operationsNumber = await _operationStorage.GetOperationsNumber(acountId);
         return operationsNumber;
     }
-    public async Task PostOperation(OperationDTO operation)
-    {
-        await _operationStorage.PostOperation(_mapper.Map<Operation>(operation));
-    }
+    //public async Task PostOperation(OperationDTO createOperations)
+    //{
+    //    DateTime operationTime = DateTime.Now;
+    //    Operation fromOperation = new()
+    //    {
+    //        AcountId = createOperations.FromAcountId,
+    //        TransactionId = createOperations.TransactionId,
+    //        Debit = false,
+    //        TransactionAmount = createOperations.Amount,
+    //        Balance = 0,
+    //        OperationTime = operationTime
+
+    //    };
+    //    Operation toOperation = new()
+    //    {
+    //        AcountId = createOperations.ToAcountId,
+    //        TransactionId = createOperations.TransactionId,
+    //        Debit = true,
+    //        TransactionAmount = createOperations.Amount,
+    //        Balance = 0,
+    //        OperationTime = operationTime
+
+    //    };
+        //await _operationStorage.PostOperation(fromOperation);
+
+        //await _operationStorage.PostOperation(toOperation);
+
+    //}
 }

@@ -12,29 +12,6 @@ public class OperationStorage : IOperationStorage
     {
         _dbContextFactory = dbContextFactory;
     }
-    public async Task PostOperation(Operation operation)
-    {
-        if (operation == null)
-            throw new ArgumentNullException(nameof(operation));
-        operation.AcountId = 1;
-        operation.TransactionId = Guid.NewGuid();
-        Operation operation1 = new()
-        {
-            Id = Guid.NewGuid(),
-            OperationTime = DateTime.Now,
-            AcountId = 3,
-            TransactionId = operation.TransactionId,
-            Debit = !operation.Debit,
-            TransactionAmount = operation.TransactionAmount,
-            Balance = operation.Balance
-
-        };
-        var dbContext = _dbContextFactory.CreateDbContext();
-        await dbContext.Operations.AddAsync(operation);
-        await dbContext.Operations.AddAsync(operation1);
-        await dbContext.SaveChangesAsync();
-
-    }
     public async Task<List<OperationModel>> GetOperationsHistory(int acountId, int pageNumber, int numberOfRecords)
     {
         var dbContext = _dbContextFactory.CreateDbContext();

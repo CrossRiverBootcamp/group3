@@ -1,15 +1,21 @@
-<form [formGroup]="addTransactionForm">
-    <mat-form-field  appearance="fill">
-      <mat-label>To Acount</mat-label>
-      <input matInput formControlName="toAcount">
-    </mat-form-field>
-
-    <mat-form-field  appearance="fill">
-      <mat-label>Amount</mat-label>
-      <input matInput formControlName="amount" />
-    </mat-form-field>
-
-    <button  (click)="addTransaction()" [disabled]="addTransactionForm.invalid">make transaction</button>
-
-  </form>
-
+<mat-toolbar>
+  <span>Add Transaction</span>
+</mat-toolbar>
+<mat-card class="my-card">
+  <mat-card-content>
+    <form [formGroup]="addTransactionForm" class="my-form">
+      <mat-form-field class="full-width">
+        <mat-label>To acount</mat-label>
+        <input matInput formControlName="toAcount" placeholder="To acount" name="toAcount">
+      </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Amount</mat-label>
+          <input matInput formControlName="amount" placeholder="Amount" name="amount">
+        </mat-form-field>
+      </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button (click)="addTransaction()" [disabled]="addTransactionForm.invalid"
+      color="primary">Add Transaction</button>
+  </mat-card-actions>
+</mat-card>

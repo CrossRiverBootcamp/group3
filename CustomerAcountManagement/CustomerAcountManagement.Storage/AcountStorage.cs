@@ -70,7 +70,7 @@ public class AcountStorage : IAcountStorage
 
 
     }
-    public async Task<bool> UpdateBalance(int receiverId, int senderId, int amount)
+    public async Task<bool> UpdateBalanceAndCreateOperations(int receiverId, int senderId, int amount, Guid transactionId)
     {
         if (receiverId == 0 || senderId == 0 || amount == 0)
             throw new ArgumentNullException();
@@ -81,6 +81,29 @@ public class AcountStorage : IAcountStorage
             senderAcount.Balance -= amount;
             Acount receiverAcount = await context.Acounts.FirstOrDefaultAsync(acount => acount.Id == receiverId);
             receiverAcount.Balance += amount;
+            DateTime operationTime = DateTime.Now;
+            Operation fromOperation = new()
+            {
+                AcountId = senderAcount.Id,
+                TransactionId = transactionId,
+                Debit = false,
+                TransactionAmount = amount,
+                Balance = senderAcount.Balance,
+                OperationTime = operationTime
+
+            };
+            Operation toOperation = new()
+            {
+                AcountId = receiverId,
+                TransactionId = transactionId,
+                Debit = true,
+                TransactionAmount = amount,
+                Balance = receiverAcount.Balance,
+                OperationTime = operationTime
+
+            };
+            context.Operations.Add(toOperation);
+            context.Operations.Add(fromOperation);
             await context.SaveChangesAsync();
             return true;
         }

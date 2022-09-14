@@ -26,8 +26,8 @@ public class TransactionService : ITransactionService
             await _transactionStorage.CreateTransaction(transaction);
             Payload payload = new() {
                 Id = transaction.Id,
-                FromAcountId = transactionDTO.FromAccountID,
-                ToAcountId = transactionDTO.ToAccountID,
+                FromAcountId = transactionDTO.FromAcountID,
+                ToAcountId = transactionDTO.ToAcountID,
                 Amount=transactionDTO.Amount
             };
             await _messageSession.Publish(payload);

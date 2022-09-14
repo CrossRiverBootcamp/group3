@@ -26,10 +26,5 @@ public class OperationController : Controller
             return BadRequest();
         return await _operationService.GetOperationsNumber(acountId);
     }
-    [HttpPost]
 
-    public async Task PostOperation([FromBody] OperationDTO operation)
-    {
-       await _operationService.PostOperation(operation);
-    }
 }

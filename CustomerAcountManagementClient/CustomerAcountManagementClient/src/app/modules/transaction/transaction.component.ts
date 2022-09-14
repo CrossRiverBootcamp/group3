@@ -22,8 +22,8 @@ export class TransactionComponent implements OnInit {
   }
   addTransaction() {
     this.transaction = {
-      fromAcount: this._customerService.acountId,
-      toAcount: this.addTransactionForm?.value.toAcount,
+      fromAcountId: this._customerService.acountId,
+      toAcountId: this.addTransactionForm?.value.toAcount,
       amount: this.addTransactionForm?.value.amount
     }
     this._transactionService.createTransaction(this.transaction).subscribe((success: boolean) => {

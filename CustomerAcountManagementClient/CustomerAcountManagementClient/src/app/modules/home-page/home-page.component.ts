@@ -23,5 +23,8 @@ export class HomePageComponent {
   navigateToAddTransaction(){
     this._router.navigate(['transaction']);
   }
+  navigateToOperationsHistory(){
+    this._router.navigate(['acount/operations-history']);
+  }
 
 }
