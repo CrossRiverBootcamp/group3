@@ -35,7 +35,7 @@ recoverability.Delayed(
 var connectionToDB = "Server=localhost;database=NServiceBusTransaction;Trusted_Connection=True;";
 var persistence = endpointConfiguration.UsePersistence<SqlPersistence>();
 var subscriptions = persistence.SubscriptionSettings();
-subscriptions.CacheFor(TimeSpan.FromMinutes(1));
+subscriptions.CacheFor(TimeSpan.FromDays(1));
 var dialect = persistence.SqlDialect<SqlDialect.MsSqlServer>();
 persistence.ConnectionBuilder(
     connectionBuilder: () =>
@@ -50,7 +50,7 @@ endpointConfiguration.SendFailedMessagesTo("error");
 var containerSettings = endpointConfiguration.UseContainer(new DefaultServiceProviderFactory());
 containerSettings.ServiceCollection.AddAutoMapper(typeof(Program));
 
-var endpointInstance = await Endpoint.Start(endpointConfiguration);
+//var endpointInstance = await Endpoint.Start(endpointConfiguration);
 Console.WriteLine("Please press enter to exit....");
 Console.ReadLine();
-await endpointInstance.Stop();
+//await endpointInstance.Stop();

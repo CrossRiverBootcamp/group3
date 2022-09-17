@@ -13,5 +13,6 @@ public class RegisterDTO
     public string Email { get; set; }
     [Required]
     public string Password { get; set; }
-
+    [Required]
+    public string VerificationCode { get; set; }
 }

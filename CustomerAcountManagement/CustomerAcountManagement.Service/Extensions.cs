@@ -12,6 +12,7 @@ public static class Extensions
         services.AddScoped<ICustomerStorage, CustomerStorage>();
         services.AddScoped<IAcountStorage, AcountStorage>();
         services.AddScoped<IOperationStorage, OperationStorage>();
+        services.AddSingleton<IEmailVerificationStorage, EmailVerificationStorage>();
         IServiceCollection serviceCollection = services.AddDbContextFactory<BankDBContext>(opt => opt.UseSqlServer(
           configuration.GetConnectionString("BankDB")));
         return services;

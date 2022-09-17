@@ -11,11 +11,11 @@ public class TransactionService : ITransactionService
     private readonly ITransactionStorage _transactionStorage;
     private readonly IMapper _mapper;
     private readonly IMessageSession _messageSession;
-    public TransactionService(ITransactionStorage transactionStorage, IMapper mapper, IMessageSession messageSession)
+    public TransactionService(ITransactionStorage transactionStorage, IMapper mapper)//, IMessageSession messageSession)
     {
         _transactionStorage = transactionStorage;
         _mapper = mapper;
-        _messageSession = messageSession;
+       // _messageSession = messageSession;
     }
     public async Task PostTransaction(TransactionDTO transactionDTO)
     {

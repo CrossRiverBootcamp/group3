@@ -13,11 +13,18 @@ namespace CustomerAcountManagement.API.Controllers;
 public class CustomerController : ControllerBase
 {
     private readonly ICustomerService _CustomerService;
-    private readonly IMapper _mapper;
-    public CustomerController(ICustomerService CustomerService)
+    private readonly IEmailVerificationService _EmailVerificationService;
+    public CustomerController(ICustomerService CustomerService,IEmailVerificationService emailVerificationService)
     {
         _CustomerService = CustomerService;
+        _EmailVerificationService = emailVerificationService;
 
+    }
+    [HttpGet]
+    public async Task<ActionResult> VerificateEmail(string email)
+    {
+        _EmailVerificationService.VerificateEmail(email);
+        return Ok();
     }
     [HttpPost("Register")]
     public async Task<ActionResult<bool>> Register([FromBody] RegisterDTO registerDTO)
