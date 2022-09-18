@@ -8,16 +8,15 @@ import { MaterialModule } from '../material/material/material.module';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { OperationsHistoryComponent } from './operations-history/operations-history.component';
-import { EmailVerificationComponent } from './email-verification/email-verification.component';
-import { CourseDialogComponent } from './course-dialog/course-dialog.component';
+import { EmailVerificationDialogComponent } from './email-verification-dialog/email-verification-dialog.component';
 
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
-  { path: "register", component: RegisterComponent },
+  { path: "register", component:RegisterComponent },
   { path: "acountInfo", component: AcountInfoComponent },
-  { path: "operations-history", component: OperationsHistoryComponent },
-  { path: "email-verification", component: EmailVerificationComponent }
+  { path: "operations-history", component: OperationsHistoryComponent }
+ 
 
 
 ]
@@ -27,8 +26,7 @@ const routes: Routes = [
     RegisterComponent,
     AcountInfoComponent,
     OperationsHistoryComponent,
-    EmailVerificationComponent,
-    CourseDialogComponent
+    EmailVerificationDialogComponent
 
   ],
   imports: [
@@ -44,12 +42,9 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
     OperationsHistoryComponent,
-    EmailVerificationComponent,
-    CourseDialogComponent
+    EmailVerificationDialogComponent
 
-  ],
-  entryComponents: [CourseDialogComponent]
-
+  ]
 })
 
 export class AcountModule { }

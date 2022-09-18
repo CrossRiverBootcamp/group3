@@ -2,10 +2,11 @@ import { LoginDTO } from '../models/loginDTO.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
-import { Customer } from '../models/customer.moder';
+import { Customer } from '../models/customer.model';
 import { Router } from '@angular/router';
 import { Operation } from '../models/operation.model';
 import { ThirdPartyDetails } from '../models/thirdPartyDetails.model';
+import { RegisterDTO } from '../models/registerDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +30,11 @@ export class CustomerService {
       })
      
   }
-  register(customer: Customer): Observable<boolean> {
+  register(customer: RegisterDTO): Observable<boolean> {
     return this._http.post<boolean>(`${this.baseCustomerUrl}Register`, customer);
+  }
+  validateEmail(email:string){
+   return this._http.get(`${this.baseCustomerUrl}${email}`)
   }
   getAcountInfo():Observable<any> {
      return this._http.get(`${this.baseAcountUrl}AcountInfo/ ${this.acountId}`)

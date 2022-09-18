@@ -13,10 +13,6 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatToolbarModule } from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatDialog, MatDialogConfig, /*MAT_DIALOG_DATA,*/ MatDialogRef} from '@angular/material/dialog';
- 
-
-
 
 
 const materialComponents = [
@@ -33,11 +29,6 @@ const materialComponents = [
   MatToolbarModule,
   MatButtonModule,
   MatTooltipModule,
-  MatDialog, 
-  MatDialogConfig,
-  MatDialogRef
-  // MAT_DIALOG_DATA
-  
 ]
 @NgModule({
   declarations: [],
@@ -48,7 +39,5 @@ const materialComponents = [
   exports:[
     materialComponents
   ]
-  // providers:[{ provide: MAT_DIALOG_DATA, useValue: [] }]
-  
 })
 export class MaterialModule { }

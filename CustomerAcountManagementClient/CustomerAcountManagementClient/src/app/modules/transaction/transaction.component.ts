@@ -27,10 +27,7 @@ export class TransactionComponent implements OnInit {
       amount: this.addTransactionForm?.value.amount
     }
     this._transactionService.createTransaction(this.transaction).subscribe((success: boolean) => {
-      // if (success)
-      //   alert('Transaction is done')
-      // else
-      //   alert('Transaction failed')
+     
     })
   }
 

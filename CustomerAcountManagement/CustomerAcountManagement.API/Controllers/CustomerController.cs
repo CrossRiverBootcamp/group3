@@ -20,7 +20,7 @@ public class CustomerController : ControllerBase
         _EmailVerificationService = emailVerificationService;
 
     }
-    [HttpGet]
+    [HttpGet("{email}")]
     public async Task<ActionResult> VerificateEmail(string email)
     {
         _EmailVerificationService.VerificateEmail(email);
