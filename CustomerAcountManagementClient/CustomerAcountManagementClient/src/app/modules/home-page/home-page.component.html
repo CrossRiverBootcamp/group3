@@ -1,13 +1,13 @@
 <body class="backGround">
     <mat-toolbar color="primary">
     <mat-toolbar-row>
-       <span><a href="/">HOME</a></span>
        <span class="spacer"></span>
        <a mat-button  (click)="navigateToRegister()">Register</a>
        <a mat-button (click)="navigateToLogin()">Login</a>
-       <a mat-button (click)="navigateToAddTransaction()" [disabled]="!this._customerService.acountId">Transaction</a>
-       <a mat-button (click)="navigateToOperationsHistory()" [disabled]="!this._customerService.acountId">Operations history</a>
-      </mat-toolbar-row>
+        <a mat-button [disabled]="!this._customerService.customer" (click)="navigateToAddTransaction()" >Transaction</a>
+        <a mat-button [disabled]="!this._customerService.customer" (click)="navigateToOperationsHistory()" >Operations history</a>
+      
+       </mat-toolbar-row>
  </mat-toolbar>
  <router-outlet></router-outlet>
 </body>

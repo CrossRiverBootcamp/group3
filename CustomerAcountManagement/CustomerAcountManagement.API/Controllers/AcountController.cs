@@ -1,28 +1,28 @@
 ﻿using DTO;
 using Microsoft.AspNetCore.Mvc;
 using CustomerAcountManagement.Service;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CustomerAcountManagement.API.Controllers;
-
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class AcountController : ControllerBase
 {
-    private readonly IAcountService _AcountService;
-    public AcountController(IAcountService AcountService)
+    private readonly IAcountService _acountService;
+    public AcountController(IAcountService acountService)
     {
-        _AcountService = AcountService;
+        _acountService = acountService;
     }
-
-
+   
     [HttpGet("AcountInfo/ {acountId}")]
     public async Task<ActionResult<AcountInfoDTO>> AcountInfo(int acountId)
     {
         try
         {
-            return Ok(await _AcountService.GetAcount(acountId));
+            return Ok(await _acountService.GetAcount(acountId));
 
         }
         catch (Exception ex)
@@ -39,7 +39,7 @@ public class AcountController : ControllerBase
         {
             if (acountId == 0)
                 return BadRequest();
-            return Ok(await _AcountService.GetCustomerByAcountId(acountId));
+            return Ok(await _acountService.GetCustomerByAcountId(acountId));
         }
         catch(Exception ex)
         {

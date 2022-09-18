@@ -21,9 +21,11 @@ export class HomePageComponent {
 
   }
   navigateToAddTransaction(){
+    if(this._customerService.customer)
     this._router.navigate(['transaction']);
   }
   navigateToOperationsHistory(){
+    if(this._customerService.customer)
     this._router.navigate(['acount/operations-history']);
   }
 

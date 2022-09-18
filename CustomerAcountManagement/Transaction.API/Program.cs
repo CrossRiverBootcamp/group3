@@ -3,6 +3,10 @@ using Transaction.Service;
 using TransactionService;
 using NServiceBus;
 using System.Data.SqlClient;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 IConfigurationRoot configuration = new
             ConfigurationBuilder().AddJsonFile("appsettings.json",
@@ -68,8 +72,55 @@ Log.Logger = new LoggerConfiguration().
 
 // Add services to the container.
 
-builder.Services.AddSwaggerGen();
+#region jwt configuration
+var securityKey = Encoding.ASCII.GetBytes(configuration["JWT:key"]);
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(securityKey),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+#endregion
 
+#region swagger configuration
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Transaction.Api", Version = "v1" });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter 'Bearer' [space] and then your valid token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] {}
+
+                    }
+                });
+});
+#endregion
 IServiceCollection serviceCollection = builder.Services.AddScoped<ITransactionService, Transaction.Service.TransactionService>();
 builder.Services.AddBLDependencies(builder.Configuration);
 
@@ -89,12 +140,19 @@ if (app.Environment.IsDevelopment())
 }
 app.UseEventHandlerMiddleware();
 
+app.UseRouting();
+
 app.UseCors(AllowAll);
 
-app.UseHttpsRedirection();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
+app.UseHttpsRedirection();
 
 app.Run();

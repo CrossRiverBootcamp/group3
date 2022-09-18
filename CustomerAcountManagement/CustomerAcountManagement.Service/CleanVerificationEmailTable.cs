@@ -15,7 +15,7 @@ public class CleanVerificationEmailTable : IHostedService
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        // timer repeates call to RemoveScheduledAccounts every 24 hours.
+       
         _timer = new Timer(
                RemoveExpiringVerifications,
                null,

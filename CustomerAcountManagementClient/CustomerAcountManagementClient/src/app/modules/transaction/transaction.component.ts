@@ -22,7 +22,7 @@ export class TransactionComponent implements OnInit {
   }
   addTransaction() {
     this.transaction = {
-      fromAcountId: this._customerService.acountId,
+      fromAcountId: this._customerService.customer.acountId,
       toAcountId: this.addTransactionForm?.value.toAcount,
       amount: this.addTransactionForm?.value.amount
     }

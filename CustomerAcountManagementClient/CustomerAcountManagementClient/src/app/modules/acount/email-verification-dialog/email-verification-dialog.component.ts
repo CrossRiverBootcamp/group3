@@ -31,7 +31,7 @@ export class EmailVerificationDialogComponent implements OnInit {
 this._customerService.register(this.registerCustomer)
 .subscribe(
       (success:boolean)=>{
-        alert("You have been registered successfully"),
+        alert(`You have been registered successfully \n You can log in now`),
 
         this.dialogRef.close(this.emailVerificationForm.value)
       },

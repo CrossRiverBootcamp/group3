@@ -8,11 +8,11 @@ namespace CustomerAcountManagement.Service;
 
 public class AcountService : IAcountService
 {
-    private readonly IAcountStorage _AcountStorage;
+    private readonly IAcountStorage _acountStorage;
     private readonly IMapper _mapper;
-    public AcountService(IAcountStorage AcountStorag, IMapper mapper)
+    public AcountService(IAcountStorage acountStorag, IMapper mapper)
     {
-        _AcountStorage = AcountStorag;
+        _acountStorage = acountStorag;
         _mapper = mapper;
     }
 
@@ -20,7 +20,7 @@ public class AcountService : IAcountService
     {
         try
         {
-            Storage.Entities.Acount acount = await _AcountStorage.GetAcountInfo(acountId);
+            Storage.Entities.Acount acount = await _acountStorage.GetAcountInfo(acountId);
             if (acount != null)
                 return _mapper.Map<AcountInfoDTO>(acount);
             throw new Exception("Acount does not exist");
@@ -37,16 +37,10 @@ public class AcountService : IAcountService
     {
         if (acountId == 0)
             throw new ArgumentNullException();
-        CustomerModel customer=await _AcountStorage.GetCustomerByAcountId(acountId);
+        CustomerModel customer=await _acountStorage.GetCustomerByAcountId(acountId);
         if (customer == null)
             throw new Exception("Customer does not exist");
         return _mapper.Map<ThirdPartyDetails>(customer);
     }
-    public Task<bool> PostAcount(AcountDTO acountDTO)
-    {
-        throw new NotImplementedException();
-        //לשאול את אילה מה אני צריכה לעשותת כאן
-    }
-
-    
+      
 }

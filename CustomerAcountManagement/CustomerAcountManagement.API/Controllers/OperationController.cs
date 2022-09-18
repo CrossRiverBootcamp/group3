@@ -1,8 +1,10 @@
 ﻿using CustomerAcountManagement.Service;
 using DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerAcountManagement.API.Controllers;
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class OperationController : Controller

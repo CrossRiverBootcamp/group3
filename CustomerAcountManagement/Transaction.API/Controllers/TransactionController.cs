@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Transaction.DTO;
 using Transaction.Service;
 
 namespace Transaction.API.Controllers;
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class TransactionController : Controller

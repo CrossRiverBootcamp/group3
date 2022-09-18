@@ -4,31 +4,45 @@ using DTO;
 using CustomerAcountManagement.Storage;
 using CustomerAcountManagement.Storage.Entities;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Configuration;
 
 namespace CustomerAcountManagement.Service;
 
 public class CustomerService : ICustomerService
 {
-    private readonly IAcountStorage _AcountStorage;
+    private readonly IAcountStorage _acountStorage;
     private readonly ICustomerStorage _customerStorage;
     private readonly IEmailVerificationService _emailVerificationService;
+    private readonly IConfiguration _config;
     private readonly IMapper _mapper;
-    public CustomerService(IAcountStorage acount, ICustomerStorage customer,IEmailVerificationService emailVerificationService, IMapper mapper)
+    public CustomerService(IAcountStorage acount, ICustomerStorage customer,IEmailVerificationService emailVerificationService, IMapper mapper, IConfiguration config)
     {
-        _AcountStorage = acount;
+        _acountStorage = acount;
         _customerStorage = customer;
         _emailVerificationService = emailVerificationService;
+        _config= config;
         _mapper = mapper;
     }
 
-    public async Task<int> LogIn(string email, string password)
+    public async Task<CustomerTokenDTO> LogIn(string email, string password)
     {
         try
         {
             Customer customer = await _customerStorage.LogIn(email, password);
             if (customer != null)
-                return await _AcountStorage.GetAcountIdByCustomerId(customer.Id);
-            return 0;
+            {
+                int acountId= await _acountStorage.GetAcountIdByCustomerId(customer.Id);
+                CustomerTokenDTO customerToken = new();
+                customerToken.AcountId = acountId;
+               customerToken.Token=await generateJsonWebToken(customerToken);
+                return customerToken;
+            }
+              
+            return null;
         }
         catch (Exception ex)
         {
@@ -54,7 +68,7 @@ public class CustomerService : ICustomerService
             {
                 Storage.Entities.Acount acount = new Storage.Entities.Acount();
                 acount.CustomerId = customer.Id;
-                await _AcountStorage.CreateAcount(acount);
+                await _acountStorage.CreateAcount(acount);
             }
             catch
             {
@@ -79,6 +93,24 @@ public class CustomerService : ICustomerService
             return false;
         }
 
+    }
+    public async Task<string> generateJsonWebToken(CustomerTokenDTO customer)
+    {
+
+        var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_config["JWT:key"]));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new Claim[]
+            {
+                    new ("AcountId", customer.AcountId.ToString()),
+            }),
+            Expires = DateTime.UtcNow.AddMinutes(30),
+            SigningCredentials = credentials
+        };
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
     }
 
 }

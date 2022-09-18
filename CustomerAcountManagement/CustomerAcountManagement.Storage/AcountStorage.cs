@@ -19,9 +19,9 @@ public class AcountStorage : IAcountStorage
         {
             throw new ArgumentNullException(nameof(acount));
         }
-        var context = _dbContextFactory.CreateDbContext();
-        context.Acounts.Add(acount);
-        await context.SaveChangesAsync();
+        var dbContext = _dbContextFactory.CreateDbContext();
+        dbContext.Acounts.Add(acount);
+        await dbContext.SaveChangesAsync();
 
     }
 
@@ -31,8 +31,8 @@ public class AcountStorage : IAcountStorage
         {
             throw new ArgumentNullException(nameof(acountId));
         }
-        var context = _dbContextFactory.CreateDbContext();
-        return await context.Acounts.Include(acount => acount.Customer).FirstOrDefaultAsync(acount => acount.Id == acountId);
+        var dbContext = _dbContextFactory.CreateDbContext();
+        return await dbContext.Acounts.Include(acount => acount.Customer).FirstOrDefaultAsync(acount => acount.Id == acountId);
     }
     public async Task<CustomerModel> GetCustomerByAcountId(int acountId)
     {
@@ -53,15 +53,15 @@ public class AcountStorage : IAcountStorage
     {
         if (customerId == 0)
             throw new ArgumentNullException(nameof(customerId));
-        var context = _dbContextFactory.CreateDbContext();
-        return (await context.Acounts.FirstOrDefaultAsync(acount => acount.CustomerId == customerId)).Id;
+        var dbContext = _dbContextFactory.CreateDbContext();
+        return (await dbContext.Acounts.FirstOrDefaultAsync(acount => acount.CustomerId == customerId)).Id;
     }
     public async Task<bool> ValidateSenderBalance(int balance, int idSender)
     {
         if (balance == 0 || idSender == 0)
             throw new ArgumentNullException();
-        var context = _dbContextFactory.CreateDbContext();
-        int senderBalance = (await context.Acounts.FirstOrDefaultAsync(acount => acount.CustomerId == idSender)).Balance;
+        var dbContext = _dbContextFactory.CreateDbContext();
+        int senderBalance = (await dbContext.Acounts.FirstOrDefaultAsync(acount => acount.CustomerId == idSender)).Balance;
         if (senderBalance >= balance)
         {
             return true;
@@ -74,12 +74,12 @@ public class AcountStorage : IAcountStorage
     {
         if (receiverId == 0 || senderId == 0 || amount == 0)
             throw new ArgumentNullException();
-        var context = _dbContextFactory.CreateDbContext();
+        var dbContext = _dbContextFactory.CreateDbContext();
         try
         {
-            Acount senderAcount = await context.Acounts.FirstOrDefaultAsync(acount => acount.Id == senderId);
+            Acount senderAcount = await dbContext.Acounts.FirstOrDefaultAsync(acount => acount.Id == senderId);
             senderAcount.Balance -= amount;
-            Acount receiverAcount = await context.Acounts.FirstOrDefaultAsync(acount => acount.Id == receiverId);
+            Acount receiverAcount = await dbContext.Acounts.FirstOrDefaultAsync(acount => acount.Id == receiverId);
             receiverAcount.Balance += amount;
             DateTime operationTime = DateTime.Now;
             Operation fromOperation = new()
@@ -102,9 +102,9 @@ public class AcountStorage : IAcountStorage
                 OperationTime = operationTime
 
             };
-            context.Operations.Add(toOperation);
-            context.Operations.Add(fromOperation);
-            await context.SaveChangesAsync();
+            dbContext.Operations.Add(toOperation);
+            dbContext.Operations.Add(fromOperation);
+            await dbContext.SaveChangesAsync();
             return true;
         }
         catch

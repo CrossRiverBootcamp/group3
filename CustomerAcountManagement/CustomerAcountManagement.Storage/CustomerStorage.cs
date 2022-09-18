@@ -18,7 +18,8 @@ public class CustomerStorage : ICustomerStorage
         {
             throw new ArgumentNullException();
         }
-        //email=email.ToLower();
+        
+        email=email.ToLower();
         var dbContext = _dbContextFactory.CreateDbContext();
         return await dbContext.Customers.FirstOrDefaultAsync
             (customer =>  customer.Email.ToLower().Equals(email.ToLower()) && customer.Password.Equals(password));

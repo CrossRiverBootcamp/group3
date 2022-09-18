@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DTO;
+﻿using DTO;
 using Microsoft.AspNetCore.Mvc;
 using CustomerAcountManagement.Service;
 
@@ -12,18 +11,18 @@ namespace CustomerAcountManagement.API.Controllers;
 [ApiController]
 public class CustomerController : ControllerBase
 {
-    private readonly ICustomerService _CustomerService;
-    private readonly IEmailVerificationService _EmailVerificationService;
-    public CustomerController(ICustomerService CustomerService,IEmailVerificationService emailVerificationService)
+    private readonly ICustomerService _customerService;
+    private readonly IEmailVerificationService _emailVerificationService;
+    public CustomerController(ICustomerService customerService,IEmailVerificationService emailVerificationService)
     {
-        _CustomerService = CustomerService;
-        _EmailVerificationService = emailVerificationService;
+        _customerService = customerService;
+        _emailVerificationService = emailVerificationService;
 
     }
     [HttpGet("{email}")]
     public async Task<ActionResult> VerificateEmail(string email)
     {
-        _EmailVerificationService.VerificateEmail(email);
+        _emailVerificationService.VerificateEmail(email);
         return Ok();
     }
     [HttpPost("Register")]
@@ -32,7 +31,7 @@ public class CustomerController : ControllerBase
         try
         {
 
-            return Ok(await _CustomerService.PostCustomer(registerDTO));
+            return Ok(await _customerService.PostCustomer(registerDTO));
 
         }
         catch
@@ -41,15 +40,15 @@ public class CustomerController : ControllerBase
         }
     }
     [HttpPost("Login")]
-    public async Task<ActionResult<int>> LogIn([FromBody] LogInDTO logInDTO)
+    public async Task<ActionResult<CustomerTokenDTO>> LogIn([FromBody] LogInDTO logInDTO)
     {
         try
         {
 
-            int acountId = await _CustomerService.LogIn(logInDTO.Email, logInDTO.CustomerPassword);
-            if (acountId == 0)
+            CustomerTokenDTO customerToken = await _customerService.LogIn(logInDTO.Email, logInDTO.CustomerPassword);
+            if (customerToken == null)
                 throw new Exception("Customer name or password are incorect");
-            return Ok(acountId);
+            return Ok(customerToken);
 
         }
         catch

@@ -2,27 +2,28 @@ import { LoginDTO } from '../models/loginDTO.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
-import { Customer } from '../models/customer.model';
 import { Router } from '@angular/router';
 import { Operation } from '../models/operation.model';
 import { ThirdPartyDetails } from '../models/thirdPartyDetails.model';
 import { RegisterDTO } from '../models/registerDTO.model';
+import { CustomerTokenDTO } from '../models/customerTokenDTO.moderl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-  acountId!: number;
+  
+ 
   constructor(private _http: HttpClient, private router: Router) { }
 
   baseCustomerUrl: string = "https://localhost:7251/api/Customer/";
   baseAcountUrl:string='https://localhost:7251/api/Acount/';
   baseOperationUrl:string='https://localhost:7251/api/Operation/';
-
+customer:CustomerTokenDTO
   async logIn(LogIn: LoginDTO){
-    this._http.post<number>(this.baseCustomerUrl + "LogIn", LogIn)
-      .subscribe((acountId: number) =>{
-        this.acountId = acountId
+      this._http.post<CustomerTokenDTO>(this.baseCustomerUrl + "LogIn", LogIn)
+      .subscribe((customerToken: CustomerTokenDTO) =>{
+        this.customer= customerToken
         this.router.navigate(['acount/acountInfo']);
       } ,
       ()=>{
@@ -37,16 +38,32 @@ export class CustomerService {
    return this._http.get(`${this.baseCustomerUrl}${email}`)
   }
   getAcountInfo():Observable<any> {
-     return this._http.get(`${this.baseAcountUrl}AcountInfo/ ${this.acountId}`)
+     return this._http.get(`${this.baseAcountUrl}AcountInfo/ ${this.customer.acountId}`, {
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.customer.token}`
+      }})
   }
   getOperationsHistory(pageNumber:number,numberOfRecords:number):Observable<Operation[]>{
-    return this._http.get<Operation[]>(`${this.baseOperationUrl}${this.acountId}/${pageNumber}/${numberOfRecords}`)
+    return this._http.get<Operation[]>(`${this.baseOperationUrl}${this.customer?.acountId}/${pageNumber}/${numberOfRecords}`, {
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.customer.token}`
+      }})
   }
   getCustomerByAcountId(acountId:number):Observable<ThirdPartyDetails>{
-   return this._http.get<ThirdPartyDetails>(`${this.baseAcountUrl}Customer/${acountId}`)
+   return this._http.get<ThirdPartyDetails>(`${this.baseAcountUrl}Customer/${acountId}`, {
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.customer.token}`
+    }})
   }
   getOperationsNumber():Observable<number>{
-    return this._http.get<number>(`${this.baseOperationUrl}${1}`)
+    return this._http.get<number>(`${this.baseOperationUrl}${1}`, {
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.customer.token}`
+      }})
   }
 
 }
