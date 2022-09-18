@@ -31,6 +31,5 @@
     "strictTemplates": true
     
   },
-  //כאן שמתי את השורה הזאת שאני לא בטוחה מה היא עושה
-  "strictPropertyInitialization": false
+ 
 }
