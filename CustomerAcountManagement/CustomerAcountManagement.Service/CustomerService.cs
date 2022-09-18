@@ -51,14 +51,11 @@ public class CustomerService : ICustomerService
 
     }
 
-
     public async Task<bool> PostCustomer(RegisterDTO registerDTO)
     {
         try
         {
-            bool verified = await _emailVerificationService.GetEmailVerification(registerDTO.Email, registerDTO.VerificationCode);
-            if (!verified)
-                throw new Exception("Please use a verification code");
+
             Customer customer = _mapper.Map<Customer>(registerDTO);
             string existingEmail = await _customerStorage.ValidateUniqueEmail(customer.Email);
             if (existingEmail != null)
