@@ -3,7 +3,6 @@ using AutoMapper;
 using DTO;
 using CustomerAcountManagement.Storage;
 using CustomerAcountManagement.Storage.Entities;
-using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace CustomerAcountManagement.Service;
 
@@ -11,13 +10,11 @@ public class CustomerService : ICustomerService
 {
     private readonly IAcountStorage _AcountStorage;
     private readonly ICustomerStorage _customerStorage;
-    private readonly IEmailVerificationService _emailVerificationService;
     private readonly IMapper _mapper;
-    public CustomerService(IAcountStorage acount, ICustomerStorage customer,IEmailVerificationService emailVerificationService, IMapper mapper)
+    public CustomerService(IAcountStorage acount, ICustomerStorage customer, IMapper mapper)
     {
         _AcountStorage = acount;
         _customerStorage = customer;
-        _emailVerificationService = emailVerificationService;
         _mapper = mapper;
     }
 
@@ -37,14 +34,11 @@ public class CustomerService : ICustomerService
 
     }
 
-
     public async Task<bool> PostCustomer(RegisterDTO registerDTO)
     {
         try
         {
-            bool verified = await _emailVerificationService.GetEmailVerification(registerDTO.Email, registerDTO.VerificationCode);
-            if (!verified)
-                throw new Exception("Please use a verification code");
+
             Customer customer = _mapper.Map<Customer>(registerDTO);
             string existingEmail = await _customerStorage.ValidateUniqueEmail(customer.Email);
             if (existingEmail != null)
