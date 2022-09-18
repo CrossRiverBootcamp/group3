@@ -1,7 +1,6 @@
 using AutoMapper;
 using DTO;
 using CustomerAcountManagement.Storage;
-using CustomerAcountManagement.Storage.Entities;
 using CustomerAcountManagement.Storage.models;
 
 namespace CustomerAcountManagement.Service;

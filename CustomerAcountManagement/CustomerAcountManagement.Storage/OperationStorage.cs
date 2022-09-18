@@ -1,5 +1,4 @@
-﻿
-using CustomerAcountManagement.Storage.Entities;
+﻿using CustomerAcountManagement.Storage.Entities;
 using CustomerAcountManagement.Storage.models;
 using Microsoft.EntityFrameworkCore;
 

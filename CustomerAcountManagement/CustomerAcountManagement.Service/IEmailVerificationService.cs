@@ -1,7 +1,5 @@
 ﻿
 
-using CustomerAcountManagement.Storage.Entities;
-
 namespace CustomerAcountManagement.Service;
 
 public interface IEmailVerificationService

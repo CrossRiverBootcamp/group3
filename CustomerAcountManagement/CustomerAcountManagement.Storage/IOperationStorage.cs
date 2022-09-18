@@ -1,6 +1,4 @@
-﻿
-
-using CustomerAcountManagement.Storage.Entities;
+﻿using CustomerAcountManagement.Storage.Entities;
 using CustomerAcountManagement.Storage.models;
 
 namespace CustomerAcountManagement.Storage;

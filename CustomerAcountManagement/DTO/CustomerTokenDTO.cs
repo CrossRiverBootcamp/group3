@@ -1,5 +1,4 @@
-﻿
-namespace DTO;
+﻿namespace DTO;
 public class CustomerTokenDTO
 {
     public int AcountId { get; set; }

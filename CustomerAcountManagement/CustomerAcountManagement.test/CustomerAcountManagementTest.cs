@@ -41,7 +41,7 @@ namespace CustomerAcountManagement.Test
         {
             // ARRANGE
             var email = "rk0583264988@gmail.com";
-            var firstName = "";
+            var firstName = "rach";
             var lastName = "ker";
             var password = "12345678";
             var verificationCode = "9872";

@@ -14,8 +14,8 @@ namespace Ttransaction.Storage.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FromAccountID = table.Column<int>(type: "int", nullable: false),
-                    ToAccountID = table.Column<int>(type: "int", nullable: false),
+                    FromAcountID = table.Column<int>(type: "int", nullable: false),
+                    ToAcountID = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     status = table.Column<int>(type: "int", maxLength: 100, nullable: false),

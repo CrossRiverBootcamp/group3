@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NSB.Messages.Commands;
 
-public class UpdateTransactionStatus:ICommand
+public class UpdateTransactionStatus
 {
     [Required]
     public Guid TransactionId { get; set; }

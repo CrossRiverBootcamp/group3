@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CustomerAcountManagement.Service;
 using CustomerAcountManagement.Storage;
-using DTO;
 using NSB.Messages.Commands;
 using NSB.Messages.Events;
 using NServiceBus;

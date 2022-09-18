@@ -1,9 +1,8 @@
-﻿using NServiceBus;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace NSB.Messages.Commands;
 
-public class TransferMoney : ICommand
+public class TransferMoney
 {
     [Required]
     public Guid TransactionId { get; set; }

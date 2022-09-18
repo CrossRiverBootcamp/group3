@@ -1,5 +1,4 @@
-﻿
-using DTO;
+﻿using DTO;
 
 namespace CustomerAcountManagement.Service;
 

@@ -1,6 +1,4 @@
-
 using DTO;
-using CustomerAcountManagement.Storage.Entities;
 
 namespace CustomerAcountManagement.Service;
 

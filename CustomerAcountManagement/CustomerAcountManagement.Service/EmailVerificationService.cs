@@ -1,5 +1,4 @@
-﻿
-using CustomerAcountManagement.Storage;
+﻿using CustomerAcountManagement.Storage;
 using CustomerAcountManagement.Storage.Entities;
 using Microsoft.AspNetCore.Identity.UI.Services;
 

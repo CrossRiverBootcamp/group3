@@ -47,31 +47,31 @@ var databaseConnection = builder.Configuration.GetConnectionString("BankDB");
 var NSBConnection = builder.Configuration.GetConnectionString("NSB");
 var queueName = builder.Configuration.GetSection("Queues:AcountAPIQueue:Name").Value;
 var rabbitMQConnection = builder.Configuration.GetConnectionString("RabbitMQ");
-//builder.Host.UseNServiceBus(hostBuilderContext =>
-//{
-//    var endpointConfiguration = new EndpointConfiguration("Acount");
+builder.Host.UseNServiceBus(hostBuilderContext =>
+{
+    var endpointConfiguration = new EndpointConfiguration("Acount");
 
-//    endpointConfiguration.EnableInstallers();
-//    endpointConfiguration.EnableOutbox();
+    endpointConfiguration.EnableInstallers();
+    endpointConfiguration.EnableOutbox();
 
-//    var persistence = endpointConfiguration.UsePersistence<SqlPersistence>();
-//    persistence.ConnectionBuilder(
-//    connectionBuilder: () =>
-//    {
-//        return new SqlConnection(NSBConnection);
-//    });
+    var persistence = endpointConfiguration.UsePersistence<SqlPersistence>();
+    persistence.ConnectionBuilder(
+    connectionBuilder: () =>
+    {
+        return new SqlConnection(NSBConnection);
+    });
 
-//    var dialect = persistence.SqlDialect<SqlDialect.MsSqlServer>();
+    var dialect = persistence.SqlDialect<SqlDialect.MsSqlServer>();
 
-//    var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
-//    transport.ConnectionString(rabbitMQConnection);
-//    transport.UseConventionalRoutingTopology(QueueType.Quorum);
+    var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
+    transport.ConnectionString(rabbitMQConnection);
+    transport.UseConventionalRoutingTopology(QueueType.Quorum);
 
-//    var conventions = endpointConfiguration.Conventions();
-//    //conventions.DefiningEventsAs(type => type.Namespace == "NSB.Messages.Events");
-//    //conventions.DefiningCommandsAs(type => type.Namespace == "NSB.Messages.Commands");
-//    return endpointConfiguration;
-//});
+    var conventions = endpointConfiguration.Conventions();
+    conventions.DefiningEventsAs(type => type.Namespace == "NSB.Messages.Events");
+    conventions.DefiningCommandsAs(type => type.Namespace == "NSB.Messages.Commands");
+    return endpointConfiguration;
+});
 // Add services to the container.
 
 #endregion

@@ -1,5 +1,4 @@
 ﻿using NServiceBus;
-using Microsoft.Extensions.Hosting;
 using NServiceBus.Logging;
 using System.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +12,9 @@ var endpointConfiguration = new EndpointConfiguration("TransactionSaga");
 var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
 transport.UseConventionalRoutingTopology(QueueType.Quorum);
 transport.ConnectionString("host = localhost");
+var conventions = endpointConfiguration.Conventions();
+conventions.DefiningEventsAs(type => type.Namespace == "NSB.Messages.Events");
+conventions.DefiningCommandsAs(type => type.Namespace == "NSB.Messages.Commands");
 var routing = transport.Routing();
 routing.RouteToEndpoint(typeof(TransferMoney), "Acount");
 routing.RouteToEndpoint(typeof(UpdateTransactionStatus), "Transaction");
@@ -50,7 +52,7 @@ endpointConfiguration.SendFailedMessagesTo("error");
 var containerSettings = endpointConfiguration.UseContainer(new DefaultServiceProviderFactory());
 containerSettings.ServiceCollection.AddAutoMapper(typeof(Program));
 
-//var endpointInstance = await Endpoint.Start(endpointConfiguration);
+var endpointInstance = await Endpoint.Start(endpointConfiguration);
 Console.WriteLine("Please press enter to exit....");
 Console.ReadLine();
-//await endpointInstance.Stop();
+await endpointInstance.Stop();

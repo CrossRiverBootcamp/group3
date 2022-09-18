@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using NSB.Messages.Commands;
 using NSB.Messages.Events;
 using NServiceBus;
-using Ttransaction.Storage.Entities;
 
 namespace Transaction.NSB;
 public class TransactionPolicy : Saga<TransactionPolicyData>

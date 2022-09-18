@@ -14,7 +14,6 @@ public class AutoMapper : Profile
         CreateMap<CustomerModel, ThirdPartyDetails>().ReverseMap();
         CreateMap<Storage.Entities.Acount,AcountInfoDTO>().IncludeMembers(acount=>acount.Customer).ReverseMap();
         CreateMap<OperationModel, OperationDTO>().ReverseMap();
-        //CreateMap<TransferMoney, CreateOperationsDTO>().ReverseMap();
     }
 
 }

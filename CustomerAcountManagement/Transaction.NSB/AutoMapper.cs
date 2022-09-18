@@ -1,6 +1,4 @@
-﻿
-
-using AutoMapper;
+﻿using AutoMapper;
 using NSB.Messages.Commands;
 using NSB.Messages.Events;
 

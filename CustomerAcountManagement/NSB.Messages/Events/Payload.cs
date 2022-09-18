@@ -1,9 +1,8 @@
-﻿using NServiceBus;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace NSB.Messages.Events;
 
-public class Payload : IEvent
+public class Payload 
 {
     [Required]
     public Guid TransactionId { get; set; }

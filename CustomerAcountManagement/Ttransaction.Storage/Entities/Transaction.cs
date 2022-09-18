@@ -1,5 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ttransaction.Storage.Entities;
@@ -10,9 +9,9 @@ public class Transaction
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
     [Required]
-    public int FromAccountID { get; set; }
+    public int FromAcountID { get; set; }
     [Required]
-    public int ToAccountID { get; set; }
+    public int ToAcountID { get; set; }
     [Required]
     public int Amount { get; set; }
     public DateTime Date { get; set; }
