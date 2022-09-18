@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>A verification cod has been sent to your email address, please insert it below:</h2>
+
+<mat-dialog-content [formGroup]="emailVerificationForm">
+  
+    <mat-form-field>
+        <mat-label>Verification code</mat-label>
+        <input  matInput formControlName="emailVerificationCode" placeholder="Verification Code" name="emailVerificationCode">
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button mat-primary"(click)="submit()" [disabled]="emailVerificationForm.invalid">Submit</button>
+</mat-dialog-actions>
